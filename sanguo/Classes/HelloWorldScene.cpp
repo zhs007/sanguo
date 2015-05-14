@@ -28,24 +28,26 @@ bool HelloWorld::init()
         return false;
     }
     
+    m_scene.init(this);
+    
     //Size visibleSize = Director::getInstance()->getVisibleSize();
     //Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
-    LayerCtrl* pLayer = LayerCtrl::create();
-    pLayer->setTouchesEnable(true);
-    this->addChild(pLayer);
-    
-    Sprite* pSprite = Sprite::create("res/worldmap.jpg");
-    pSprite->setAnchorPoint(Vec2(0, 0));
-    pSprite->setPosition(Vec2(0, 0));
-    pLayer->addChild(pSprite);
-    
-    //pLayer->setLayerSize(pSprite->getContentSize().width, pSprite->getContentSize().height);
-    
-    Rect rect;
-    rect.origin.set(0, 0);
-    rect.size.setSize(pSprite->getContentSize().width, pSprite->getContentSize().height);
-    pLayer->SetLayerRect(rect);
+//    LayerCtrl* pLayer = LayerCtrl::create();
+//    pLayer->setTouchesEnable(true);
+//    this->addChild(pLayer);
+//    
+//    Sprite* pSprite = Sprite::create("res/worldmap.jpg");
+//    pSprite->setAnchorPoint(Vec2(0, 0));
+//    pSprite->setPosition(Vec2(0, 0));
+//    pLayer->addChild(pSprite);
+//    
+//    //pLayer->setLayerSize(pSprite->getContentSize().width, pSprite->getContentSize().height);
+//    
+//    Rect rect;
+//    rect.origin.set(0, 0);
+//    rect.size.setSize(pSprite->getContentSize().width, pSprite->getContentSize().height);
+//    pLayer->SetLayerRect(rect);
     //pLayer->setLayerSize(pSprite->getContentSize().width, pSprite->getContentSize().height);
 
 //    /////////////////////////////

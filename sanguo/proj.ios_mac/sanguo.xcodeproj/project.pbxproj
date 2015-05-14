@@ -13,6 +13,16 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		25F71DF01B04705B0070DAEE /* LayerCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */; };
 		25F71DF11B04705B0070DAEE /* LayerCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */; };
+		25F71DF91B0480480070DAEE /* BaseObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DF71B0480480070DAEE /* BaseObj.cpp */; };
+		25F71DFA1B0480480070DAEE /* BaseObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DF71B0480480070DAEE /* BaseObj.cpp */; };
+		25F71DFD1B0481450070DAEE /* BaseCSV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DFB1B0481450070DAEE /* BaseCSV.cpp */; };
+		25F71DFE1B0481450070DAEE /* BaseCSV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DFB1B0481450070DAEE /* BaseCSV.cpp */; };
+		25F71E011B0486DB0070DAEE /* Person.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DFF1B0486DB0070DAEE /* Person.cpp */; };
+		25F71E021B0486DB0070DAEE /* Person.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DFF1B0486DB0070DAEE /* Person.cpp */; };
+		25F71E051B04899D0070DAEE /* PersonMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71E031B04899D0070DAEE /* PersonMgr.cpp */; };
+		25F71E061B04899D0070DAEE /* PersonMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71E031B04899D0070DAEE /* PersonMgr.cpp */; };
+		25F71E091B048A1F0070DAEE /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71E071B048A1F0070DAEE /* GameScene.cpp */; };
+		25F71E0A1B048A1F0070DAEE /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71E071B048A1F0070DAEE /* GameScene.cpp */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -102,6 +112,16 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayerCtrl.cpp; sourceTree = "<group>"; };
 		25F71DEF1B04705B0070DAEE /* LayerCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerCtrl.h; sourceTree = "<group>"; };
+		25F71DF71B0480480070DAEE /* BaseObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseObj.cpp; sourceTree = "<group>"; };
+		25F71DF81B0480480070DAEE /* BaseObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseObj.h; sourceTree = "<group>"; };
+		25F71DFB1B0481450070DAEE /* BaseCSV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseCSV.cpp; sourceTree = "<group>"; };
+		25F71DFC1B0481450070DAEE /* BaseCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCSV.h; sourceTree = "<group>"; };
+		25F71DFF1B0486DB0070DAEE /* Person.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Person.cpp; sourceTree = "<group>"; };
+		25F71E001B0486DB0070DAEE /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		25F71E031B04899D0070DAEE /* PersonMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PersonMgr.cpp; sourceTree = "<group>"; };
+		25F71E041B04899D0070DAEE /* PersonMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonMgr.h; sourceTree = "<group>"; };
+		25F71E071B048A1F0070DAEE /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
+		25F71E081B048A1F0070DAEE /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -227,6 +247,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		25F71DF61B0480480070DAEE /* GameScene */ = {
+			isa = PBXGroup;
+			children = (
+				25F71E071B048A1F0070DAEE /* GameScene.cpp */,
+				25F71E081B048A1F0070DAEE /* GameScene.h */,
+				25F71E031B04899D0070DAEE /* PersonMgr.cpp */,
+				25F71E041B04899D0070DAEE /* PersonMgr.h */,
+				25F71DFF1B0486DB0070DAEE /* Person.cpp */,
+				25F71E001B0486DB0070DAEE /* Person.h */,
+				25F71DF71B0480480070DAEE /* BaseObj.cpp */,
+				25F71DF81B0480480070DAEE /* BaseObj.h */,
+			);
+			path = GameScene;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +312,9 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				25F71DFB1B0481450070DAEE /* BaseCSV.cpp */,
+				25F71DFC1B0481450070DAEE /* BaseCSV.h */,
+				25F71DF61B0480480070DAEE /* GameScene */,
 				25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */,
 				25F71DEF1B04705B0070DAEE /* LayerCtrl.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
@@ -473,12 +511,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25F71DF91B0480480070DAEE /* BaseObj.cpp in Sources */,
 				25F71DF01B04705B0070DAEE /* LayerCtrl.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				25F71DFD1B0481450070DAEE /* BaseCSV.cpp in Sources */,
+				25F71E011B0486DB0070DAEE /* Person.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				25F71E091B048A1F0070DAEE /* GameScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				25F71E051B04899D0070DAEE /* PersonMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,8 +530,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				25F71DF11B04705B0070DAEE /* LayerCtrl.cpp in Sources */,
+				25F71DFE1B0481450070DAEE /* BaseCSV.cpp in Sources */,
+				25F71E021B0486DB0070DAEE /* Person.cpp in Sources */,
+				25F71E061B04899D0070DAEE /* PersonMgr.cpp in Sources */,
+				25F71DFA1B0480480070DAEE /* BaseObj.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
+				25F71E0A1B048A1F0070DAEE /* GameScene.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
