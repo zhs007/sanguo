@@ -122,6 +122,7 @@
 		25F71E041B04899D0070DAEE /* PersonMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonMgr.h; sourceTree = "<group>"; };
 		25F71E071B048A1F0070DAEE /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		25F71E081B048A1F0070DAEE /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		25F71E0B1B04962B0070DAEE /* BaseDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDef.h; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -250,6 +251,7 @@
 		25F71DF61B0480480070DAEE /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
+				25F71E0B1B04962B0070DAEE /* BaseDef.h */,
 				25F71E071B048A1F0070DAEE /* GameScene.cpp */,
 				25F71E081B048A1F0070DAEE /* GameScene.h */,
 				25F71E031B04899D0070DAEE /* PersonMgr.cpp */,

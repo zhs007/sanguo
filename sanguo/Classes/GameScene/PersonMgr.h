@@ -3,12 +3,16 @@
 
 #include "cocos2d.h"
 #include "BaseObj.h"
+#include "Person.h"
 
 USING_NS_CC;
 
 class PersonMgr
 {
 public:
+    static PersonMgr& getSingleton();
+public:
+    Person* newPerson(int personid);
 protected:
 	PersonMgr();
     virtual ~PersonMgr();

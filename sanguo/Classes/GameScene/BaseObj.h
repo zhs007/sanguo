@@ -8,6 +8,7 @@ USING_NS_CC;
 class BaseObj
 {
 public:
+    virtual void setPosition(float xx, float yy) = 0;
 protected:
 	BaseObj();
     virtual ~BaseObj();

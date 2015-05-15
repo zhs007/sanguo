@@ -16,9 +16,11 @@ public:
     void init(Node* pRoot);
     
     void release();
+public:
+    Node* getRoot() { return m_pLayer; }
 protected:
     Node*       m_pRoot;
-    //LayerCtrl*  m_pLayer;
+    LayerCtrl*  m_pLayer;
 };
 
 #endif // __GAMESCENE_GAMESCENE_H__
