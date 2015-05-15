@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "BaseObj.h"
 #include "GameScene.h"
+#include "BaseDef.h"
 
 USING_NS_CC;
 
@@ -18,7 +19,8 @@ protected:
 	Person();
     virtual ~Person();
 protected:
-    Sprite*     m_pSpr;
+    Sprite*                     m_pSpr;
+    std::vector<SpriteFrame*>	m_lstActionFrames[_PERSON_DIR_NUMS][_PERSON_ACTION_NUMS];	//! 动画数据
 };
 
 #endif // __GAMESCENE_PERSON_H__
