@@ -1,0 +1,10 @@
+{
+  "name": "csvtools",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node csvtools.js"
+  },
+  "dependencies": {
+    "xlsx2csv": "*"
+  }
+}
