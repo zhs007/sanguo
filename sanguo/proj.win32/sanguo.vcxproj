@@ -140,12 +140,27 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\BaseCSV.cpp" />
+    <ClCompile Include="..\Classes\GameScene\BaseObj.cpp" />
+    <ClCompile Include="..\Classes\GameScene\GameScene.cpp" />
+    <ClCompile Include="..\Classes\GameScene\Person.cpp" />
+    <ClCompile Include="..\Classes\GameScene\PersonMgr.cpp" />
+    <ClCompile Include="..\Classes\GameScene\StaticPersonInfo.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\LayerCtrl.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\BaseCSV.h" />
+    <ClInclude Include="..\Classes\GameScene\BaseDef.h" />
+    <ClInclude Include="..\Classes\GameScene\BaseObj.h" />
+    <ClInclude Include="..\Classes\GameScene\GameScene.h" />
+    <ClInclude Include="..\Classes\GameScene\Person.h" />
+    <ClInclude Include="..\Classes\GameScene\PersonMgr.h" />
+    <ClInclude Include="..\Classes\GameScene\StaticPersonInfo.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\LayerCtrl.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
