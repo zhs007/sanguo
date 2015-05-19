@@ -37,4 +37,14 @@ const bool _PERSON_ACTION_LOOP[] = {
     true
 };
 
+//! 英雄动作信息
+struct _ActionInfo{
+	int				id;
+	int				resindex;		//! 资源索引
+
+	int				bindex[_PERSON_ACTION_NUMS];	//! 动作起始帧
+	int				eindex[_PERSON_ACTION_NUMS];	//! 动作结束帧
+	int				atime[_PERSON_ACTION_NUMS];		//! 动作帧间间隔
+};
+
 #endif // __GAMESCENE_BASEDEF_H__
