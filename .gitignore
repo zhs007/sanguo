@@ -31,3 +31,6 @@ tools/csvtools/node_modules
 # xcode项目文件
 xcuserdata
 project.xcworkspace
+
+# excel临时文件
+~$*.xlsx

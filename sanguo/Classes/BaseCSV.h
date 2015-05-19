@@ -30,14 +30,13 @@ public:
 	const char* get(int x, int y) const;
 
 	const char* get(const char* headname, int y) const;
-	int get_int(const char* headname, int y) const;
-	double get_double(const char* headname, int y) const;
+	int getAsInt(const char* headname, int y) const;
+	double getAsDouble(const char* headname, int y) const;
 	bool has(const char* headname) const;
 
 	int getWidth() const { return m_iWidth; }
 
 	int getHeight() const { return m_iHeight; }
-
 public:
 	char*			m_pBuff;
 	char***			m_pArray;

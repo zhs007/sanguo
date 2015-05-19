@@ -1,6 +1,13 @@
 ﻿#ifndef __GAMESCENE_BASEDEF_H__
 #define __GAMESCENE_BASEDEF_H__
 
+// GameObjID
+// 在游戏里，所有的游戏对象都是有一个唯一静态ID，是对象唯一静态标示
+// 简单起见，这个ID一定是8位数
+//
+// 首位为1表示这是一个内部对象
+// 前4位为1000，表示这是一个角色资源，也就是PersonActionInfo里面的ID标示
+
 const int _PERSON_DIR_NUMS              =	5;		//! 人物朝向
 
 //! 人物动作类型
