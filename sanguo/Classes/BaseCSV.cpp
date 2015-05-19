@@ -15,6 +15,8 @@ std::string tostr(int n)
 	return std::string(szbuf);
 }
 
+static std::string		g_strCsvRoot;
+
 BaseCSV::BaseCSV() 
 	: m_pBuff(NULL)
 	, m_pArray(NULL)
@@ -28,13 +30,12 @@ BaseCSV::~BaseCSV()
 	release();
 }
 
-
-static std::string		g_strCsvRoot;
-
 void BaseCSV::load(const char* name)
 {
 	m_filename = name;
-	std::string fullPath = g_strCsvRoot + name;
+	//std::string fullPath = g_strCsvRoot + name;
+	std::string fullPath = "res/csv/";
+	fullPath += name;
 	_load(fullPath.c_str());
 }
 
