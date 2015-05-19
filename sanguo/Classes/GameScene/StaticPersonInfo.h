@@ -24,6 +24,10 @@ public:
     ~StaticPersonInfo();
 public:
     _ActionInfo			m_ActionInfos[_PERSON_ACTION_NUMS];		//! 动作信息
+    
+    int                 m_gameObjID;
+    std::string         m_strImg[2];
+    std::string         m_resname;
 };
 
 #endif // __GAMESCENE_STATICPERSONINFO_H__

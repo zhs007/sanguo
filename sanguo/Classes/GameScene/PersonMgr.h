@@ -14,6 +14,8 @@ class PersonMgr
 public:
     static PersonMgr& getSingleton();
 public:
+    void init();
+public:
     Person* newPerson(int personid);
 protected:
 	PersonMgr();

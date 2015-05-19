@@ -97,7 +97,7 @@ const char* BaseCSV::get(const char* headname, int y) const
 	return "";
 }
 
-int BaseCSV::get_int(const char* headname, int y) const
+int BaseCSV::getAsInt(const char* headname, int y) const
 {
 	_MapHead::const_iterator it = m_mapHead.find(headname);
 	if(it != m_mapHead.end())
@@ -106,7 +106,7 @@ int BaseCSV::get_int(const char* headname, int y) const
 	return 0;
 }
 
-double BaseCSV::get_double(const char* headname, int y) const
+double BaseCSV::getAsDouble(const char* headname, int y) const
 {
 	_MapHead::const_iterator it = m_mapHead.find(headname);
 	if(it != m_mapHead.end())
