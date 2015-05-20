@@ -29,10 +29,10 @@ void Army::setPosition(float xx, float yy)
     }
 }
 
-void Army::onIdel(int ot)
+void Army::onIdel(float dt)
 {
     for (std::vector<Person*>::iterator it = m_lstPerson.begin(); it != m_lstPerson.end(); ++it) {
-        (*it)->onIdel(ot);
+        (*it)->onIdel(dt);
     }
 }
 

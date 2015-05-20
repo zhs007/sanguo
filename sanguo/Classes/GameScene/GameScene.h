@@ -19,7 +19,7 @@ public:
     
     void initMap();
     
-    void onIdle(int ot);
+    void onIdle(float dt);
     
     void release();
 public:

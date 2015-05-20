@@ -18,7 +18,7 @@ public:
 public:
     virtual void setPosition(float xx, float yy);
     
-    virtual void onIdel(int ot);
+    virtual void onIdel(float dt);
     
     virtual void release();
 protected:

@@ -30,6 +30,8 @@ bool HelloWorld::init()
     
     m_scene.init(this);
     
+    schedule(schedule_selector(HelloWorld::onIdle));
+    
     //Size visibleSize = Director::getInstance()->getVisibleSize();
     //Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
@@ -103,4 +105,9 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+
+void HelloWorld::onIdle(float dt)
+{
+    m_scene.onIdle(dt);
 }
