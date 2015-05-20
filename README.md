@@ -13,6 +13,8 @@ csvtools
 
 csvtools是使用nodejs写的小工具，跨平台的，mac、windows下都可以使用，貌似也不需要安装excel。
 
+csvtools使用[xlsx2csv](https://github.com/zhs007/xlsx2csv)来处理xlsx到csv的转换。
+
 使用csvtools以前，需要在csvtools目录下，执行
 
 ```
