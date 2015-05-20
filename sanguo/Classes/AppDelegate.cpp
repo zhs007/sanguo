@@ -49,7 +49,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
     
-    PersonMgr::getSingleton().init();
+    //PersonMgr::getSingleton().init();
 
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();

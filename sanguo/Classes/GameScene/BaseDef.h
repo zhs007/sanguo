@@ -47,7 +47,9 @@ const bool _PERSON_ACTION_LOOP[] = {
 //! 英雄动作信息
 struct _ActionInfo{
 	int				id;
-	int				resindex;		//! 资源索引
+	std::string		img0;		//! 使用的图片
+	std::string		img1;
+	std::string		resname;	//! 资源名称
 
 	int				bindex[_PERSON_ACTION_NUMS];	//! 动作起始帧
 	int				eindex[_PERSON_ACTION_NUMS];	//! 动作结束帧

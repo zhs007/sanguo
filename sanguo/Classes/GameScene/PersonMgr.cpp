@@ -88,7 +88,9 @@ void PersonMgr::initActionInfo(const char* filename, bool refresh)
 		p.first = csvdata.getAsInt("heroid", i);
 
 		p.second.id = p.first;
-		p.second.resindex = csvdata.getAsInt("resindex", i);
+		p.second.img0 = csvdata.get("img0", i);
+		p.second.img1 = csvdata.get("img1", i);
+		p.second.resname = csvdata.get("resname", i);
 
 		char tmp[32];
 
