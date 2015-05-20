@@ -35,10 +35,20 @@ void GameScene::init(Node* pRoot)
     rect.origin.set(0, 0);
     rect.size.setSize(pSprite->getContentSize().width * 2, pSprite->getContentSize().height * 2);
     m_pLayer->SetLayerRect(rect);
+
+	PersonMgr::getSingleton().init(m_pLayer);
+
+	for(int i = 0; i < 10; ++i)
+	{
+		Person* pPerson = PersonMgr::getSingleton().newPerson(0, 10000001 + i);
+
+		if(pPerson != NULL)
+			pPerson->setPosition(100 + i * 100, 100 + i * 100);
+	}
     
-    Person* pPerson = PersonMgr::getSingleton().newPerson(0);
-    pPerson->init(0, *this);
-    pPerson->setPosition(1000, 1000);
+    //Person* pPerson = PersonMgr::getSingleton().newPerson(0);
+    //pPerson->init(0, *this);
+    //pPerson->setPosition(1000, 1000);
 }
 
 void GameScene::release()

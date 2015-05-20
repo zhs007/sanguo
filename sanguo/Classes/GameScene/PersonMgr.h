@@ -17,8 +17,8 @@ public:
 
     Person* newPerson(int personid);
 
-	//! 创建一个人物 camp:0蓝 1红 type:0弓 1斧 2枪
-	Person* newPerson(int camp, int type);
+	//! 创建一个人物 camp阵营 id士兵ID
+	Person* newPerson(int camp, int id);
 
 	//! 初始化动作信息表
 	void initActionInfo(const char* filename, bool refresh);

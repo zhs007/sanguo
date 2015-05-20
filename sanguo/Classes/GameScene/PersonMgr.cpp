@@ -7,6 +7,7 @@ PersonMgr::PersonMgr()
 	: m_sbnPerson(NULL)
 {
     initActionInfo("actioninfo.csv", false);
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("res/soldier.plist", "res/soldier.pvr.ccz");
 }
 
 PersonMgr::~PersonMgr()
@@ -69,6 +70,17 @@ Person* PersonMgr::newPerson(int personid)
     return pPerson;
 }
 
+//! 创建一个人物 camp阵营 id士兵ID
+Person* PersonMgr::newPerson(int camp, int id)
+{
+	Person* pPerson = new Person;
+	
+	if(pPerson->init(camp, id, m_sbnPerson))
+		return pPerson;
+
+	return NULL;
+}
+
 //! 初始化动作信息表
 void PersonMgr::initActionInfo(const char* filename, bool refresh)
 {
@@ -85,12 +97,13 @@ void PersonMgr::initActionInfo(const char* filename, bool refresh)
 	{
 		std::pair<int, _ActionInfo> p;
 
-		p.first = csvdata.getAsInt("heroid", i);
+		p.first = csvdata.getAsInt("gameobjid", i);
 
 		p.second.id = p.first;
 		p.second.img0 = csvdata.get("img0", i);
 		p.second.img1 = csvdata.get("img1", i);
 		p.second.resname = csvdata.get("resname", i);
+		p.second.stype = csvdata.getAsInt("stype", i);
 
 		char tmp[32];
 

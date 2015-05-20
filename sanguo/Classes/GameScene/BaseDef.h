@@ -50,6 +50,7 @@ struct _ActionInfo{
 	std::string		img0;		//! 使用的图片
 	std::string		img1;
 	std::string		resname;	//! 资源名称
+	int				stype;		//! 士兵类型 0普通 1弓箭
 
 	int				bindex[_PERSON_ACTION_NUMS];	//! 动作起始帧
 	int				eindex[_PERSON_ACTION_NUMS];	//! 动作结束帧
