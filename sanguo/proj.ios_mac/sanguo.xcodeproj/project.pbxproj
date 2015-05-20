@@ -11,6 +11,8 @@
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		25EB52581B0C23A100897A30 /* Army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB52561B0C23A100897A30 /* Army.cpp */; };
+		25EB52591B0C23AC00897A30 /* Army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB52561B0C23A100897A30 /* Army.cpp */; };
 		25F71DF01B04705B0070DAEE /* LayerCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */; };
 		25F71DF11B04705B0070DAEE /* LayerCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */; };
 		25F71DF91B0480480070DAEE /* BaseObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DF71B0480480070DAEE /* BaseObj.cpp */; };
@@ -111,6 +113,8 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* sanguo iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sanguo iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		25EB52561B0C23A100897A30 /* Army.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Army.cpp; sourceTree = "<group>"; };
+		25EB52571B0C23A100897A30 /* Army.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Army.h; sourceTree = "<group>"; };
 		25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayerCtrl.cpp; sourceTree = "<group>"; };
 		25F71DEF1B04705B0070DAEE /* LayerCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerCtrl.h; sourceTree = "<group>"; };
 		25F71DF71B0480480070DAEE /* BaseObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseObj.cpp; sourceTree = "<group>"; };
@@ -254,6 +258,8 @@
 		25F71DF61B0480480070DAEE /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
+				25EB52561B0C23A100897A30 /* Army.cpp */,
+				25EB52571B0C23A100897A30 /* Army.h */,
 				25F960291B05E132001607DB /* StaticPersonInfo.cpp */,
 				25F9602A1B05E132001607DB /* StaticPersonInfo.h */,
 				25F71E0B1B04962B0070DAEE /* BaseDef.h */,
@@ -523,6 +529,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				25F71DFD1B0481450070DAEE /* BaseCSV.cpp in Sources */,
 				25F71E011B0486DB0070DAEE /* Person.cpp in Sources */,
+				25EB52581B0C23A100897A30 /* Army.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
@@ -541,6 +548,7 @@
 				25F71DFE1B0481450070DAEE /* BaseCSV.cpp in Sources */,
 				25F71E021B0486DB0070DAEE /* Person.cpp in Sources */,
 				25F71E061B04899D0070DAEE /* PersonMgr.cpp in Sources */,
+				25EB52591B0C23AC00897A30 /* Army.cpp in Sources */,
 				25F71DFA1B0480480070DAEE /* BaseObj.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
