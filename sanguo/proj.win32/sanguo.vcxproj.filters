@@ -48,6 +48,9 @@
     <ClCompile Include="..\Classes\GameScene\EffecgMgr.cpp">
       <Filter>src\GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GameScene\Army.cpp">
+      <Filter>src\GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -84,6 +87,9 @@
       <Filter>src\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameScene\EffectMgr.h">
+      <Filter>src\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene\Army.h">
       <Filter>src\GameScene</Filter>
     </ClInclude>
   </ItemGroup>

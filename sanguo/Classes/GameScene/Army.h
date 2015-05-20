@@ -17,6 +17,9 @@ public:
     void init(int personid, float xx, float yy, GameScene& scene);
 public:
     virtual void setPosition(float xx, float yy);
+
+	virtual float getPositionX() { return 0.0f; }
+	virtual float getPositionY() { return 0.0f; }
     
     virtual void onIdel(float dt);
     

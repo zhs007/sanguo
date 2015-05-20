@@ -141,6 +141,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\BaseCSV.cpp" />
+    <ClCompile Include="..\Classes\GameScene\Army.cpp" />
     <ClCompile Include="..\Classes\GameScene\BaseObj.cpp" />
     <ClCompile Include="..\Classes\GameScene\EffecgMgr.cpp" />
     <ClCompile Include="..\Classes\GameScene\GameScene.cpp" />
@@ -154,6 +155,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\BaseCSV.h" />
+    <ClInclude Include="..\Classes\GameScene\Army.h" />
     <ClInclude Include="..\Classes\GameScene\BaseDef.h" />
     <ClInclude Include="..\Classes\GameScene\BaseObj.h" />
     <ClInclude Include="..\Classes\GameScene\EffectMgr.h" />
