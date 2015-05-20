@@ -9,6 +9,8 @@ class BaseObj
 {
 public:
     virtual void setPosition(float xx, float yy) = 0;
+	virtual float getPositionX() = 0;
+	virtual float getPositionY() = 0;
 protected:
 	BaseObj();
     virtual ~BaseObj();

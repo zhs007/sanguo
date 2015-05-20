@@ -1,5 +1,6 @@
 ﻿#include "PersonMgr.h"
 #include "../BaseCSV.h"
+#include "EffectMgr.h"
 
 USING_NS_CC;
 
@@ -50,10 +51,14 @@ void PersonMgr::init(Node* root)
 		m_sbnPerson->setPosition(0, 0);
 		root->addChild(m_sbnPerson);
 	}
+
+	EffectMgr::getSingleton().init(m_sbnPerson);
 }
 
 void PersonMgr::release()
 {
+	EffectMgr::getSingleton().release();
+
 	if(m_sbnPerson != NULL)
 	{
 		if(m_sbnPerson->getParent() != NULL)

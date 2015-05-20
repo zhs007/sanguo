@@ -8,6 +8,11 @@
 // 首位为1表示这是一个内部对象
 // 前4位为1000，表示这是一个角色资源，也就是PersonActionInfo里面的ID标示
 
+//! 游戏场景Z轴划分
+const int _GAMESCENE_Z_PERSONBOT	=	10000;	//! 人物脚下层（该值 - y）
+const int _GAMESCENE_Z_PERSON		=	20000;	//! 人物层（该值 - y）
+const int _GAMESCENE_Z_PERSONEFF	=	30000;	//! 人物效果层（该值 - y）
+
 const int _PERSON_DIR_NUMS              =	5;		//! 人物朝向
 
 //! 人物动作类型

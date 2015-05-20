@@ -1,5 +1,6 @@
 ﻿#include "GameScene.h"
 #include "PersonMgr.h"
+#include "EffectMgr.h"
 
 USING_NS_CC;
 
@@ -43,7 +44,16 @@ void GameScene::init(Node* pRoot)
 		Person* pPerson = PersonMgr::getSingleton().newPerson(0, 10000001 + i);
 
 		if(pPerson != NULL)
+		{
 			pPerson->setPosition(100 + i * 100, 100 + i * 100);
+			//pPerson->moveTo(rand() % 2000, rand() % 2000, 10);
+
+			if(i > 0)
+				pPerson->attack(m_lstPerson[i - 1]);
+			//pPerson->dead();
+
+			m_lstPerson.push_back(pPerson);
+		}
 	}
     
     //Person* pPerson = PersonMgr::getSingleton().newPerson(0);
@@ -54,4 +64,15 @@ void GameScene::init(Node* pRoot)
 void GameScene::release()
 {
     
+}
+
+//! 测试
+void GameScene::onIdle(int ot)
+{
+	for(std::vector<Person*>::iterator it = m_lstPerson.begin(); it != m_lstPerson.end(); ++it)
+	{
+		(*it)->onIdle(ot);
+	}
+
+	EffectMgr::getSingleton().onIdle(ot);
 }

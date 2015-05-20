@@ -7,6 +7,8 @@
 
 USING_NS_CC;
 
+class Person;
+
 class GameScene
 {
 public:
@@ -16,11 +18,17 @@ public:
     void init(Node* pRoot);
     
     void release();
+
+	//! 测试
+	void onIdle(int ot);
 public:
     Node* getRoot() { return m_pLayer; }
 protected:
     Node*       m_pRoot;
     LayerCtrl*  m_pLayer;
+
+	//! 测试
+	std::vector<Person*>		m_lstPerson;
 };
 
 #endif // __GAMESCENE_GAMESCENE_H__

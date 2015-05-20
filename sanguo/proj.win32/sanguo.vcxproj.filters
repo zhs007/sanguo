@@ -45,6 +45,9 @@
     <ClCompile Include="..\Classes\GameScene\StaticPersonInfo.cpp">
       <Filter>src\GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GameScene\EffecgMgr.cpp">
+      <Filter>src\GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -78,6 +81,9 @@
       <Filter>src\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameScene\StaticPersonInfo.h">
+      <Filter>src\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene\EffectMgr.h">
       <Filter>src\GameScene</Filter>
     </ClInclude>
   </ItemGroup>
