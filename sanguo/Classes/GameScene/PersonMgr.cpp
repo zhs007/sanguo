@@ -85,23 +85,23 @@ void PersonMgr::initActionInfo(const char* filename, bool refresh)
 	{
 		std::pair<int, _ActionInfo> p;
 
-		p.first = csvdata.get_int("heroid", i);
+		p.first = csvdata.getAsInt("heroid", i);
 
 		p.second.id = p.first;
-		p.second.resindex = csvdata.get_int("resindex", i);
+		p.second.resindex = csvdata.getAsInt("resindex", i);
 
 		char tmp[32];
 
 		for(int j = 0; j < _PERSON_ACTION_NUMS; ++j)
 		{
 			sprintf(tmp, "bindex%d", j);
-			p.second.bindex[j] = csvdata.get_int(tmp, i);
+			p.second.bindex[j] = csvdata.getAsInt(tmp, i);
 
 			sprintf(tmp, "eindex%d", j);
-			p.second.eindex[j] = csvdata.get_int(tmp, i);
+			p.second.eindex[j] = csvdata.getAsInt(tmp, i);
 
 			sprintf(tmp, "time%d", j);
-			p.second.atime[j] = csvdata.get_int(tmp, i);
+			p.second.atime[j] = csvdata.getAsInt(tmp, i);
 		}
 
 		m_mapActionInfo.insert(p);
