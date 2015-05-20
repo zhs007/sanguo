@@ -1,4 +1,5 @@
 ﻿#include "PersonMgr.h"
+#include "Army.h"
 #include "../BaseCSV.h"
 #include "EffectMgr.h"
 
@@ -73,6 +74,11 @@ Person* PersonMgr::newPerson(int personid)
     Person* pPerson = new Person;
     
     return pPerson;
+}
+
+void PersonMgr::deletePerson(Person* pPerson)
+{
+    delete pPerson;
 }
 
 //! 创建一个人物 camp阵营 id士兵ID

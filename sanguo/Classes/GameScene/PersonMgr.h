@@ -16,6 +16,8 @@ public:
 	void release();
 
     Person* newPerson(int personid);
+    
+    void deletePerson(Person* pPerson);
 
 	//! 创建一个人物 camp阵营 id士兵ID
 	Person* newPerson(int camp, int id);

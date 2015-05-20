@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-class Person;
+class Army;
 
 class GameScene
 {
@@ -17,18 +17,20 @@ public:
 public:
     void init(Node* pRoot);
     
+    void initMap();
+    
+    void onIdle(float dt);
+    
     void release();
-
-	//! 测试
-	void onIdle(int ot);
+public:
+    void addArmy(int gameObjID, float xx, float yy);
 public:
     Node* getRoot() { return m_pLayer; }
 protected:
-    Node*       m_pRoot;
-    LayerCtrl*  m_pLayer;
-
-	//! 测试
-	std::vector<Person*>		m_lstPerson;
+    Node*               m_pRoot;
+    LayerCtrl*          m_pLayer;
+    
+    std::vector<Army*>  m_lstArmy;
 };
 
 #endif // __GAMESCENE_GAMESCENE_H__

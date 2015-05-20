@@ -11,6 +11,7 @@
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		2542F05E1B0C75B1005A0CC1 /* StaticPersonInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F960291B05E132001607DB /* StaticPersonInfo.cpp */; };
 		25EB52581B0C23A100897A30 /* Army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB52561B0C23A100897A30 /* Army.cpp */; };
 		25EB52591B0C23AC00897A30 /* Army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB52561B0C23A100897A30 /* Army.cpp */; };
 		25F71DF01B04705B0070DAEE /* LayerCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */; };
@@ -554,6 +555,7 @@
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				25F71E0A1B048A1F0070DAEE /* GameScene.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				2542F05E1B0C75B1005A0CC1 /* StaticPersonInfo.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

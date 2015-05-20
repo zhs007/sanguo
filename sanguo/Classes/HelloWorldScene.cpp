@@ -29,8 +29,8 @@ bool HelloWorld::init()
     }
     
     m_scene.init(this);
-
-	schedule(schedule_selector(HelloWorld::onIdle));
+    
+    schedule(schedule_selector(HelloWorld::onIdle));
     
     //Size visibleSize = Director::getInstance()->getVisibleSize();
     //Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -107,8 +107,7 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 #endif
 }
 
-//! ≤‚ ‘
 void HelloWorld::onIdle(float dt)
 {
-	m_scene.onIdle(dt * 1000);
+    m_scene.onIdle(dt);
 }
