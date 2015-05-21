@@ -6,6 +6,7 @@
 #include "LayerCtrl.h"
 #include "EffectLayer.h"
 #include "SoldierLayer.h"
+#include "GroundLayer.h"
 
 USING_NS_CC;
 
@@ -42,6 +43,7 @@ protected:
 //    Node*               m_pRoot;
 //    LayerCtrl*          m_pLayer;
     
+    GroundLayer*        m_pLayerGround;
     EffectLayer*        m_pLayerEffect;
     SoldierLayer*       m_pLayerSoldier;
     

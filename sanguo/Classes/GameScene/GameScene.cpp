@@ -69,24 +69,13 @@ bool GameScene::init()
 
 void GameScene::initMap()
 {
-//    m_pLayer = LayerCtrl::create();
-//    m_pLayer->setTouchesEnable(true);
-//    m_pRoot->addChild(m_pLayer);
-    
-    Sprite* pSprite = Sprite::create("res/worldmap.jpg");
-    pSprite->setAnchorPoint(Vec2(0, 0));
-    pSprite->setPosition(Vec2(0, 0));
-    pSprite->setScale(2);
-    addChild(pSprite);
-    
-    //pLayer->setLayerSize(pSprite->getContentSize().width, pSprite->getContentSize().height);
+    m_pLayerGround = GroundLayer::create();
+    addChild(m_pLayerGround);
     
     Rect rect;
     rect.origin.set(0, 0);
-    rect.size.setSize(pSprite->getContentSize().width * 2, pSprite->getContentSize().height * 2);
+    rect.size.setSize(m_pLayerGround->getWidth(), m_pLayerGround->getHeight());
     SetLayerRect(rect);
-    
-    //PersonMgr::getSingleton().init(m_pLayer);
 }
 
 void GameScene::onIdle(float dt)

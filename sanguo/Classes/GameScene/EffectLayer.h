@@ -12,7 +12,6 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(EffectLayer);
 public:
-	bool init();
 	void releaseAllEffect();
 
 	//! 计时
@@ -50,6 +49,8 @@ protected:
 
 	EffectLayer();
     virtual ~EffectLayer();
+    
+    bool init();
 
 	//! 计时相关
 	//! 弓箭计时
