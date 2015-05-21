@@ -21,7 +21,7 @@ public:
 	virtual float getPositionX() { return 0.0f; }
 	virtual float getPositionY() { return 0.0f; }
     
-    virtual void onIdel(float dt);
+    virtual void onIdle(int ot);
     
     virtual void release();
 protected:

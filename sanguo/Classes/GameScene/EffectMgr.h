@@ -1,4 +1,4 @@
-#ifndef __GAMESCENE_EFFECTMGR_H__
+ï»¿#ifndef __GAMESCENE_EFFECTMGR_H__
 #define __GAMESCENE_EFFECTMGR_H__
 
 #include "cocos2d.h"
@@ -14,52 +14,52 @@ public:
 	void init(Node* personode);
 	void release();
 
-	//! ¼ÆÊ±
+	//! è®¡æ—¶
 	void onIdle(int ot);
 
-	//! Ìí¼ÓÒ»¸ù¼ı
+	//! æ·»åŠ ä¸€æ ¹ç®­
 	void addArrow(float bx, float by, float ex, float ey, int movetime, int delay);
-	//! ÊÍ·ÅËùÓĞµÄ¼ı
+	//! é‡Šæ”¾æ‰€æœ‰çš„ç®­
 	void releaseAllArrow();
 
 protected:
 	struct _ArrowData{
 		Sprite*			sprite;
-		int				delay;		//! ÑÓ³ÙÊ±¼ä
+		int				delay;		//! å»¶è¿Ÿæ—¶é—´
 
-		float			bx;			//! ÆğµãÎ»ÖÃ
+		float			bx;			//! èµ·ç‚¹ä½ç½®
 		float			by;
-		float			ex;			//! ÖÕµãÎ»ÖÃ
+		float			ex;			//! ç»ˆç‚¹ä½ç½®
 		float			ey;
-		float			px1;		//! ¿ØÖÆµã1
+		float			px1;		//! æ§åˆ¶ç‚¹1
 		float			py1;
-		float			px2;		//! ¿ØÖÆµã2
+		float			px2;		//! æ§åˆ¶ç‚¹2
 		float			py2;
 
-		int				curtime;	//! ¾­¹ıµÄÊ±¼ä
-		int				alltime;	//! ×ÜÊ±¼ä
+		int				curtime;	//! ç»è¿‡çš„æ—¶é—´
+		int				alltime;	//! æ€»æ—¶é—´
 
-		//! ¶¯»­¼ÆÊ±£¬Èç¹û¶¯»­²¥·ÅÍê³É·µ»Øtrue
+		//! åŠ¨ç”»è®¡æ—¶ï¼Œå¦‚æœåŠ¨ç”»æ’­æ”¾å®Œæˆè¿”å›true
 		bool onIdle(int ot);
-		//! ÊÍ·Å
+		//! é‡Šæ”¾
 		void release();
 
-		//! ¼ÆËã½Ç¶È
+		//! è®¡ç®—è§’åº¦
 		float getRotate(float px, float py, float x, float y);
 	};
 
 	EffectMgr();
     virtual ~EffectMgr();
 
-	//! ¼ÆÊ±Ïà¹Ø
-	//! ¹­¼ı¼ÆÊ±
+	//! è®¡æ—¶ç›¸å…³
+	//! å¼“ç®­è®¡æ—¶
 	void onIlde_Arrow(int ot);
 
 protected:
-	Node*			m_pPersonNode;		//! ÈËÎï½Úµã
+	Node*			m_pPersonNode;		//! äººç‰©èŠ‚ç‚¹
 
 
-	std::list<_ArrowData>		m_lstArrow;			//! ¹­¼ıĞ§¹û
+	std::list<_ArrowData>		m_lstArrow;			//! å¼“ç®­æ•ˆæœ
 };
 
 #endif	// __GAMESCENE_EFFECTMGR_H__

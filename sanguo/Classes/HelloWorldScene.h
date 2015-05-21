@@ -18,10 +18,8 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
-    
-    void onIdle(float dt);
 public:
-    GameScene   m_scene;
+    GameScene*   m_pScene;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

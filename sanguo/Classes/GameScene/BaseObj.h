@@ -12,9 +12,9 @@ public:
 	virtual float getPositionX() = 0;
 	virtual float getPositionY() = 0;
     
-    virtual void onIdel(float dt) {}
+    virtual void onIdle(int ot) = 0;
     
-    virtual void release() {}
+    virtual void release() = 0;
 protected:
 	BaseObj();
     virtual ~BaseObj();

@@ -9,14 +9,12 @@ USING_NS_CC;
 
 class Army;
 
-class GameScene
+class GameScene : public LayerCtrl
 {
 public:
-	GameScene();
-    virtual ~GameScene();
+    // implement the "static create()" method manually
+    CREATE_FUNC(GameScene);
 public:
-    void init(Node* pRoot);
-    
     void initMap();
     
     void onIdle(float dt);
@@ -24,11 +22,14 @@ public:
     void release();
 public:
     void addArmy(int gameObjID, float xx, float yy);
-public:
-    Node* getRoot() { return m_pLayer; }
 protected:
-    Node*               m_pRoot;
-    LayerCtrl*          m_pLayer;
+    GameScene();
+    virtual ~GameScene();
+    
+    virtual bool init();
+protected:
+//    Node*               m_pRoot;
+//    LayerCtrl*          m_pLayer;
     
     std::vector<Army*>  m_lstArmy;
 };

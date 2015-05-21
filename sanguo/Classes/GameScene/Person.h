@@ -15,6 +15,9 @@ public:
     bool init(int camp, int personid, Node* root);
 
 	virtual void release();
+    
+    //! 计时
+    virtual void onIdle(int ot);
 public:
     virtual void setPosition(float xx, float yy);
 
@@ -42,9 +45,6 @@ public:
 
 	//! 死亡
 	void dead();
-
-	//! 计时
-	void onIdle(int ot);
 protected:
 	Person();
     virtual ~Person();

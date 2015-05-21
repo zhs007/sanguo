@@ -1,4 +1,4 @@
-#include "EffectMgr.h"
+ï»¿#include "EffectMgr.h"
 
 USING_NS_CC;
 
@@ -20,7 +20,7 @@ static inline float sineEaseInOut(float time)
 		return (2 * time * time - 2 * time + 1) * 0.3f + time * 0.7f;
 }
 
-//! ¶¯»­¼ÆÊ±£¬Èç¹û¶¯»­²¥·ÅÍê³É·µ»Øtrue
+//! åŠ¨ç”»è®¡æ—¶ï¼Œå¦‚æœåŠ¨ç”»æ’­æ”¾å®Œæˆè¿”å›true
 bool EffectMgr::_ArrowData::onIdle(int ot)
 {
 	if(delay > 0)
@@ -44,7 +44,7 @@ bool EffectMgr::_ArrowData::onIdle(int ot)
 	if(curtime >= alltime)
 		return true;
 
-	//! ÇúÏßµ÷ÕûÖ®ºóµÄÊ±¼ä
+	//! æ›²çº¿è°ƒæ•´ä¹‹åçš„æ—¶é—´
 	int chgtime = sineEaseInOut((float)curtime / alltime) * alltime;
 
 	float xa = 0;
@@ -72,7 +72,7 @@ bool EffectMgr::_ArrowData::onIdle(int ot)
 	return false;
 }
 
-//! ÊÍ·Å
+//! é‡Šæ”¾
 void EffectMgr::_ArrowData::release()
 {
 	if(sprite != NULL)
@@ -85,7 +85,7 @@ void EffectMgr::_ArrowData::release()
 	}
 }
 
-//! ¼ÆËã½Ç¶È
+//! è®¡ç®—è§’åº¦
 float EffectMgr::_ArrowData::getRotate(float px, float py, float x, float y)
 {
 	double sx = x - px;
@@ -152,13 +152,13 @@ void EffectMgr::release()
 	releaseAllArrow();
 }
 
-//! ¼ÆÊ±
+//! è®¡æ—¶
 void EffectMgr::onIdle(int ot)
 {
 	onIlde_Arrow(ot);
 }
 
-//! Ìí¼ÓÒ»¸ù¼ı
+//! æ·»åŠ ä¸€æ ¹ç®­
 void EffectMgr::addArrow(float bx, float by, float ex, float ey, int movetime, int delay)
 {
 	if(m_pPersonNode == NULL)
@@ -178,7 +178,7 @@ void EffectMgr::addArrow(float bx, float by, float ex, float ey, int movetime, i
 
 	m_pPersonNode->addChild(data.sprite, _GAMESCENE_Z_PERSONEFF - by);
 
-	//! Êı¾İÏà¹Ø
+	//! æ•°æ®ç›¸å…³
 	data.bx = bx;
 	data.by = by;
 	data.ex = ex;
@@ -198,7 +198,7 @@ void EffectMgr::addArrow(float bx, float by, float ex, float ey, int movetime, i
 	m_lstArrow.push_back(data);
 }
 
-//! ÊÍ·ÅËùÓĞµÄ¼ı
+//! é‡Šæ”¾æ‰€æœ‰çš„ç®­
 void EffectMgr::releaseAllArrow()
 {
 	for(std::list<_ArrowData>::iterator it = m_lstArrow.begin(); it != m_lstArrow.end(); ++it)
@@ -209,7 +209,7 @@ void EffectMgr::releaseAllArrow()
 	m_lstArrow.clear();
 }
 
-//! ¹­¼ı¼ÆÊ±
+//! å¼“ç®­è®¡æ—¶
 void EffectMgr::onIlde_Arrow(int ot)
 {
 	for(std::list<_ArrowData>::iterator it = m_lstArrow.begin(); it != m_lstArrow.end(); )

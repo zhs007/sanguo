@@ -5,8 +5,6 @@
 USING_NS_CC;
 
 GameScene::GameScene()
-    : m_pRoot(NULL)
-    , m_pLayer(NULL)
 {
     
 }
@@ -16,9 +14,12 @@ GameScene::~GameScene()
     
 }
 
-void GameScene::init(Node* pRoot)
+bool GameScene::init()
 {
-    m_pRoot = pRoot;
+    if(!LayerCtrl::init())
+        return false;
+    
+    //m_pRoot = pRoot;
     
     initMap();
 //    m_pLayer = LayerCtrl::create();
@@ -38,7 +39,7 @@ void GameScene::init(Node* pRoot)
 //    rect.size.setSize(pSprite->getContentSize().width * 2, pSprite->getContentSize().height * 2);
 //    m_pLayer->SetLayerRect(rect);
 
-	PersonMgr::getSingleton().init(m_pLayer);
+	PersonMgr::getSingleton().init(this);
 
 	for(int i = 0; i < 10; ++i)
 	{
@@ -53,34 +54,40 @@ void GameScene::init(Node* pRoot)
     //Person* pPerson = PersonMgr::getSingleton().newPerson(0);
     //pPerson->init(0, *this);
     //pPerson->setPosition(1000, 1000);
+    
+    schedule(schedule_selector(GameScene::onIdle));
+    
+    return true;
 }
 
 void GameScene::initMap()
 {
-    m_pLayer = LayerCtrl::create();
-    m_pLayer->setTouchesEnable(true);
-    m_pRoot->addChild(m_pLayer);
+//    m_pLayer = LayerCtrl::create();
+//    m_pLayer->setTouchesEnable(true);
+//    m_pRoot->addChild(m_pLayer);
     
     Sprite* pSprite = Sprite::create("res/worldmap.jpg");
     pSprite->setAnchorPoint(Vec2(0, 0));
     pSprite->setPosition(Vec2(0, 0));
     pSprite->setScale(2);
-    m_pLayer->addChild(pSprite);
+    addChild(pSprite);
     
     //pLayer->setLayerSize(pSprite->getContentSize().width, pSprite->getContentSize().height);
     
     Rect rect;
     rect.origin.set(0, 0);
     rect.size.setSize(pSprite->getContentSize().width * 2, pSprite->getContentSize().height * 2);
-    m_pLayer->SetLayerRect(rect);
+    SetLayerRect(rect);
     
     //PersonMgr::getSingleton().init(m_pLayer);
 }
 
 void GameScene::onIdle(float dt)
 {
+    int ot = dt * 1000;
+    
     for (std::vector<Army*>::iterator it = m_lstArmy.begin(); it != m_lstArmy.end(); ++it) {
-        (*it)->onIdel(dt);
+        (*it)->onIdel(ot);
     }
 }
 
