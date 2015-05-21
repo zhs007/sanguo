@@ -46,12 +46,37 @@ bool Person::init(int camp, int personid, Node* root)
 	return true;
 }
 
+void Person::release()
+{
+	if(m_pSpr != NULL)
+	{
+		if(m_pSpr->getParent() != NULL)
+		{
+			m_pSpr->getParent()->removeChild(m_pSpr);
+		}
+
+		m_pSpr->release();
+		m_pSpr = NULL;
+	}
+
+	for(int i = 0; i < _PERSON_DIR_NUMS; ++i)
+	{
+		for(int j = 0; j < _PERSON_ACTION_NUMS; ++j)
+		{
+			for(std::vector<SpriteFrame*>::iterator it = m_lstActionFrames[i][j].begin(); it != m_lstActionFrames[i][j].end(); ++it)
+			{
+				(*it)->release();
+			}
+		}
+	}
+}
+
 void Person::setPosition(float xx, float yy)
 {
 	m_fX = xx;
 	m_fY = yy;
 
-	if(m_pRoot == NULL)
+	if(m_pRoot == NULL || m_pSpr == NULL)
 		return ;
 
     m_pSpr->setPosition(xx, yy);
@@ -191,6 +216,7 @@ void Person::attack(BaseObj* dest)
 
 void Person::attack(float dx, float dy)
 {
+	stop();
 	dirTo(dx, dy);
 	chgAction(_PERSON_ACTION_ATTACK);
 
@@ -200,6 +226,9 @@ void Person::attack(float dx, float dy)
 		float dis = sqrt((m_fX - dx) * (m_fX - dx) + (m_fY - dy) * (m_fY - dy));
 		int movetime = dis * 1000 / _ARROW_SPEED;
 
+		if(movetime <= 0)
+			movetime = 100;
+
 		EffectMgr::getSingleton().addArrow(m_fX, m_fY, dx, dy, movetime, 200);
 	}
 }
@@ -207,6 +236,7 @@ void Person::attack(float dx, float dy)
 //! 死亡
 void Person::dead()
 {
+	stop();
 	chgAction(_PERSON_ACTION_DEAD);
 }
 
@@ -254,6 +284,10 @@ void Person::initRes()
 	}
 
 	m_pSpr = Sprite::create();
+
+	if(m_pSpr == NULL)
+		return ;
+
 	m_pSpr->retain();
 	m_pSpr->setSpriteFrame(m_lstActionFrames[0][0][0]);
 
@@ -270,6 +304,9 @@ void Person::refreshDisplay()
 		return ;
 
 	if(m_iFrame < 0 || m_iFrame >= m_lstActionFrames[m_iDir][m_iAction].size())
+		return ;
+
+	if(m_pSpr == NULL)
 		return ;
 
 	m_pSpr->setSpriteFrame(m_lstActionFrames[m_iDir][m_iAction][m_iFrame]);

@@ -13,6 +13,8 @@ class Person : public BaseObj
     friend class PersonMgr;
 public:
     bool init(int camp, int personid, Node* root);
+
+	virtual void release();
 public:
     virtual void setPosition(float xx, float yy);
 
