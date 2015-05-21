@@ -10,7 +10,7 @@ USING_NS_CC;
 
 class Person : public BaseObj
 {
-    friend class PersonMgr;
+    friend class SoldierLayer;
 public:
     bool init(int camp, int personid, Node* root);
 
@@ -46,7 +46,7 @@ public:
 	//! 死亡
 	void dead();
 protected:
-	Person();
+	Person(GameScene& scene);
     virtual ~Person();
 
 	//! 初始化资源
@@ -62,13 +62,15 @@ protected:
 	//! 动作计时
 	void onIdle_Action(int ot);
 protected:
+    GameScene&                  m_scene;
+    
     Sprite*                     m_pSpr;
     std::vector<SpriteFrame*>	m_lstActionFrames[_PERSON_DIR_NUMS][_PERSON_ACTION_NUMS];	//! 动画数据
 
 	Node*						m_pRoot;
 	int							m_iCamp;		//! 阵营
 	int							m_iID;
-	_ActionInfo*				m_pActionInfo;	//! 动作信息
+	PersonActionInfo*			m_pActionInfo;	//! 动作信息
 
 	float						m_fX;			//! 坐标
 	float						m_fY;

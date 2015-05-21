@@ -1,12 +1,22 @@
 ﻿#ifndef __GAMESCENE_BASEDEF_H__
 #define __GAMESCENE_BASEDEF_H__
 
+// 命名习惯
+// 1、Mgr类，都是singleton的，一般来说，只有全局唯一的而且不依赖任何其他类生存的类才是Mgr类
+// 对其他类有依赖关系的，特别是对其他非singleton类有依赖关系的，都不应该是Mgr类
+// 一般，纯静态类才会是Mgr类
+// 2、生成对象的几种常用接口，new、add
+// new表示仅仅产生对象，但并不会管理对象，需要自己手动管理对象
+// add表示产生对象并关系对象，外部不需要过多的维护对象的生存周期
+
 // GameObjID
 // 在游戏里，所有的游戏对象都是有一个唯一静态ID，是对象唯一静态标示
 // 简单起见，这个ID一定是8位数
 //
 // 首位为1表示这是一个内部对象
 // 前4位为1000，表示这是一个角色资源，也就是PersonActionInfo里面的ID标示
+
+typedef int GameObjID;
 
 //! 游戏场景Z轴划分
 const int _GAMESCENE_Z_PERSONBOT	=	10000;	//! 人物脚下层（该值 - y）
@@ -50,8 +60,9 @@ const bool _PERSON_ACTION_LOOP[] = {
 };
 
 //! 英雄动作信息
-struct _ActionInfo{
-	int				id;
+struct PersonActionInfo{
+	GameObjID		oid;
+    
 	std::string		img0;		//! 使用的图片
 	std::string		img1;
 	std::string		resname;	//! 资源名称

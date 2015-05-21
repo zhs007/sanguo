@@ -12,28 +12,18 @@ class PersonMgr
 public:
     static PersonMgr& getSingleton();
 public:
-	void init(Node* root);
 	void release();
-
-    Person* newPerson(int personid);
-    
-    void deletePerson(Person* pPerson);
-
-	//! 创建一个人物 camp阵营 id士兵ID
-	Person* newPerson(int camp, int id);
-
+public:
 	//! 初始化动作信息表
 	void initActionInfo(const char* filename, bool refresh);
 	//! 取动作信息
-	_ActionInfo* getActionInfo(int id);
+	PersonActionInfo* getActionInfo(GameObjID oid);
 
 protected:
 	PersonMgr();
     virtual ~PersonMgr();
-
 protected:
-	std::map<int, _ActionInfo>	m_mapActionInfo;	//! 动作信息
-	SpriteBatchNode*			m_sbnPerson;		//! 人物节点
+	std::map<int, PersonActionInfo>	m_mapActionInfo;	//! 动作信息
 };
 
 #endif // __GAMESCENE_PERSONMGR_H__

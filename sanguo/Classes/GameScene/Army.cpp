@@ -1,10 +1,12 @@
 ﻿#include "Army.h"
 #include "Person.h"
 #include "PersonMgr.h"
+#include "GameScene.h"
 
 USING_NS_CC;
 
-Army::Army()
+Army::Army(GameScene& scene)
+    : m_scene(scene)
 {
 }
 
@@ -12,9 +14,9 @@ Army::~Army()
 {
 }
 
-void Army::init(int personid, float xx, float yy, GameScene& scene)
+void Army::init(GameObjID oid, float xx, float yy)
 {
-    Person* pPerson = PersonMgr::getSingleton().newPerson(0, personid);
+    Person* pPerson = m_scene.newSoldier(oid, 0);
     
     if(pPerson != NULL)
         pPerson->setPosition(xx, yy);
@@ -43,7 +45,7 @@ void Army::release()
         
         pPerson->release();
         
-        PersonMgr::getSingleton().deletePerson(pPerson);
+        m_scene.deleteSoldier(pPerson);
     }
     
     m_lstPerson.clear();

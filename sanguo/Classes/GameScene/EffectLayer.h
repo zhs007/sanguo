@@ -1,18 +1,19 @@
-﻿#ifndef __GAMESCENE_EFFECTMGR_H__
-#define __GAMESCENE_EFFECTMGR_H__
+﻿#ifndef __GAMESCENE_EFFECTLAYER_H__
+#define __GAMESCENE_EFFECTLAYER_H__
 
 #include "cocos2d.h"
 #include "BaseDef.h"
 
 USING_NS_CC;
 
-class EffectMgr
+class EffectLayer : public cocos2d::Layer
 {
 public:
-    static EffectMgr& getSingleton();
-
-	void init(Node* personode);
-	void release();
+    // implement the "static create()" method manually
+    CREATE_FUNC(EffectLayer);
+public:
+	bool init();
+	void releaseAllEffect();
 
 	//! 计时
 	void onIdle(int ot);
@@ -21,7 +22,6 @@ public:
 	void addArrow(float bx, float by, float ex, float ey, int movetime, int delay);
 	//! 释放所有的箭
 	void releaseAllArrow();
-
 protected:
 	struct _ArrowData{
 		Sprite*			sprite;
@@ -48,18 +48,17 @@ protected:
 		float getRotate(float px, float py, float x, float y);
 	};
 
-	EffectMgr();
-    virtual ~EffectMgr();
+	EffectLayer();
+    virtual ~EffectLayer();
 
 	//! 计时相关
 	//! 弓箭计时
 	void onIlde_Arrow(int ot);
 
 protected:
-	Node*			m_pPersonNode;		//! 人物节点
-
+    SpriteBatchNode*			m_sbnEffect;		//! 特效节点
 
 	std::list<_ArrowData>		m_lstArrow;			//! 弓箭效果
 };
 
-#endif	// __GAMESCENE_EFFECTMGR_H__
+#endif	// __GAMESCENE_EFFECTLAYER_H__

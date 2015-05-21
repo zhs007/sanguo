@@ -1,4 +1,4 @@
-﻿#include "EffectMgr.h"
+﻿#include "EffectLayer.h"
 
 USING_NS_CC;
 
@@ -21,7 +21,7 @@ static inline float sineEaseInOut(float time)
 }
 
 //! 动画计时，如果动画播放完成返回true
-bool EffectMgr::_ArrowData::onIdle(int ot)
+bool EffectLayer::_ArrowData::onIdle(int ot)
 {
 	if(delay > 0)
 	{
@@ -73,7 +73,7 @@ bool EffectMgr::_ArrowData::onIdle(int ot)
 }
 
 //! 释放
-void EffectMgr::_ArrowData::release()
+void EffectLayer::_ArrowData::release()
 {
 	if(sprite != NULL)
 	{
@@ -86,7 +86,7 @@ void EffectMgr::_ArrowData::release()
 }
 
 //! 计算角度
-float EffectMgr::_ArrowData::getRotate(float px, float py, float x, float y)
+float EffectLayer::_ArrowData::getRotate(float px, float py, float x, float y)
 {
 	double sx = x - px;
 	double sy = y - py;
@@ -126,42 +126,47 @@ float EffectMgr::_ArrowData::getRotate(float px, float py, float x, float y)
 
 //////////////////////////////////////////////////////////////////////////
 //! EffectMgr
-EffectMgr::EffectMgr()
-	: m_pPersonNode(NULL)
+EffectLayer::EffectLayer()
+	: m_sbnEffect(NULL)
 {	
 }
 
-EffectMgr::~EffectMgr()
+EffectLayer::~EffectLayer()
 {
 }
 
-EffectMgr& EffectMgr::getSingleton()
+bool EffectLayer::init()
 {
-    static EffectMgr s_mgr;
+    if (!cocos2d::Layer::init())
+        return false;
     
-    return s_mgr;
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("res/soldier.plist", "res/soldier.pvr.ccz");
+    
+    //! 初始化特效的批量渲染资源
+    Texture2D* persontex = Director::getInstance()->getTextureCache()->addImage("res/soldier.pvr.ccz");
+    m_sbnEffect = SpriteBatchNode::createWithTexture(persontex);
+    
+    m_sbnEffect->setPosition(0, 0);
+    addChild(m_sbnEffect);
+    
+    return true;
 }
 
-void EffectMgr::init(Node* personode)
-{
-	m_pPersonNode = personode;
-}
-
-void EffectMgr::release()
+void EffectLayer::releaseAllEffect()
 {
 	releaseAllArrow();
 }
 
 //! 计时
-void EffectMgr::onIdle(int ot)
+void EffectLayer::onIdle(int ot)
 {
 	onIlde_Arrow(ot);
 }
 
 //! 添加一根箭
-void EffectMgr::addArrow(float bx, float by, float ex, float ey, int movetime, int delay)
+void EffectLayer::addArrow(float bx, float by, float ex, float ey, int movetime, int delay)
 {
-	if(m_pPersonNode == NULL)
+	if(m_sbnEffect == NULL)
 		return ;
 
 	_ArrowData data;
@@ -176,7 +181,7 @@ void EffectMgr::addArrow(float bx, float by, float ex, float ey, int movetime, i
 	data.sprite->setPosition(bx, by);
 	data.sprite->setSpriteFrame(frame);
 
-	m_pPersonNode->addChild(data.sprite, _GAMESCENE_Z_PERSONEFF - by);
+	m_sbnEffect->addChild(data.sprite, _GAMESCENE_Z_PERSONEFF - by);
 
 	//! 数据相关
 	data.bx = bx;
@@ -199,7 +204,7 @@ void EffectMgr::addArrow(float bx, float by, float ex, float ey, int movetime, i
 }
 
 //! 释放所有的箭
-void EffectMgr::releaseAllArrow()
+void EffectLayer::releaseAllArrow()
 {
 	for(std::list<_ArrowData>::iterator it = m_lstArrow.begin(); it != m_lstArrow.end(); ++it)
 	{
@@ -210,7 +215,7 @@ void EffectMgr::releaseAllArrow()
 }
 
 //! 弓箭计时
-void EffectMgr::onIlde_Arrow(int ot)
+void EffectLayer::onIlde_Arrow(int ot)
 {
 	for(std::list<_ArrowData>::iterator it = m_lstArrow.begin(); it != m_lstArrow.end(); )
 	{

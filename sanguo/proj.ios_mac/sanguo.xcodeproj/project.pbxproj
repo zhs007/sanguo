@@ -14,8 +14,10 @@
 		2542F05E1B0C75B1005A0CC1 /* StaticPersonInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F960291B05E132001607DB /* StaticPersonInfo.cpp */; };
 		25EB52581B0C23A100897A30 /* Army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB52561B0C23A100897A30 /* Army.cpp */; };
 		25EB52591B0C23AC00897A30 /* Army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB52561B0C23A100897A30 /* Army.cpp */; };
-		25EE06E11B0D836F00775E06 /* EffecgMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EE06DF1B0D836F00775E06 /* EffecgMgr.cpp */; };
-		25EE06E21B0D8E2700775E06 /* EffecgMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EE06DF1B0D836F00775E06 /* EffecgMgr.cpp */; };
+		25EE06E51B0DA7E800775E06 /* EffectLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EE06E31B0DA7E800775E06 /* EffectLayer.cpp */; };
+		25EE06E61B0DA7E800775E06 /* EffectLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EE06E31B0DA7E800775E06 /* EffectLayer.cpp */; };
+		25EE06E91B0DAB5700775E06 /* SoldierLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EE06E71B0DAB5700775E06 /* SoldierLayer.cpp */; };
+		25EE06EA1B0DAB5700775E06 /* SoldierLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EE06E71B0DAB5700775E06 /* SoldierLayer.cpp */; };
 		25F71DF01B04705B0070DAEE /* LayerCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */; };
 		25F71DF11B04705B0070DAEE /* LayerCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */; };
 		25F71DF91B0480480070DAEE /* BaseObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71DF71B0480480070DAEE /* BaseObj.cpp */; };
@@ -118,8 +120,10 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25EB52561B0C23A100897A30 /* Army.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Army.cpp; sourceTree = "<group>"; };
 		25EB52571B0C23A100897A30 /* Army.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Army.h; sourceTree = "<group>"; };
-		25EE06DF1B0D836F00775E06 /* EffecgMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffecgMgr.cpp; sourceTree = "<group>"; };
-		25EE06E01B0D836F00775E06 /* EffectMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectMgr.h; sourceTree = "<group>"; };
+		25EE06E31B0DA7E800775E06 /* EffectLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectLayer.cpp; sourceTree = "<group>"; };
+		25EE06E41B0DA7E800775E06 /* EffectLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectLayer.h; sourceTree = "<group>"; };
+		25EE06E71B0DAB5700775E06 /* SoldierLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoldierLayer.cpp; sourceTree = "<group>"; };
+		25EE06E81B0DAB5700775E06 /* SoldierLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierLayer.h; sourceTree = "<group>"; };
 		25F71DEE1B04705B0070DAEE /* LayerCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayerCtrl.cpp; sourceTree = "<group>"; };
 		25F71DEF1B04705B0070DAEE /* LayerCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerCtrl.h; sourceTree = "<group>"; };
 		25F71DF71B0480480070DAEE /* BaseObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseObj.cpp; sourceTree = "<group>"; };
@@ -268,14 +272,16 @@
 				25F71E0B1B04962B0070DAEE /* BaseDef.h */,
 				25F71DF71B0480480070DAEE /* BaseObj.cpp */,
 				25F71DF81B0480480070DAEE /* BaseObj.h */,
-				25EE06DF1B0D836F00775E06 /* EffecgMgr.cpp */,
-				25EE06E01B0D836F00775E06 /* EffectMgr.h */,
+				25EE06E31B0DA7E800775E06 /* EffectLayer.cpp */,
+				25EE06E41B0DA7E800775E06 /* EffectLayer.h */,
 				25F71E071B048A1F0070DAEE /* GameScene.cpp */,
 				25F71E081B048A1F0070DAEE /* GameScene.h */,
 				25F71DFF1B0486DB0070DAEE /* Person.cpp */,
 				25F71E001B0486DB0070DAEE /* Person.h */,
 				25F71E031B04899D0070DAEE /* PersonMgr.cpp */,
 				25F71E041B04899D0070DAEE /* PersonMgr.h */,
+				25EE06E71B0DAB5700775E06 /* SoldierLayer.cpp */,
+				25EE06E81B0DAB5700775E06 /* SoldierLayer.h */,
 				25F960291B05E132001607DB /* StaticPersonInfo.cpp */,
 				25F9602A1B05E132001607DB /* StaticPersonInfo.h */,
 			);
@@ -531,17 +537,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25EE06E91B0DAB5700775E06 /* SoldierLayer.cpp in Sources */,
 				25F71DF91B0480480070DAEE /* BaseObj.cpp in Sources */,
 				25F71DF01B04705B0070DAEE /* LayerCtrl.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				25F71DFD1B0481450070DAEE /* BaseCSV.cpp in Sources */,
 				25F71E011B0486DB0070DAEE /* Person.cpp in Sources */,
 				25EB52581B0C23A100897A30 /* Army.cpp in Sources */,
-				25EE06E11B0D836F00775E06 /* EffecgMgr.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				25F9602B1B05E132001607DB /* StaticPersonInfo.cpp in Sources */,
+				25EE06E51B0DA7E800775E06 /* EffectLayer.cpp in Sources */,
 				25F71E091B048A1F0070DAEE /* GameScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				25F71E051B04899D0070DAEE /* PersonMgr.cpp in Sources */,
@@ -560,9 +567,10 @@
 				25F71DFA1B0480480070DAEE /* BaseObj.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				25EE06E21B0D8E2700775E06 /* EffecgMgr.cpp in Sources */,
+				25EE06EA1B0DAB5700775E06 /* SoldierLayer.cpp in Sources */,
 				25F71E0A1B048A1F0070DAEE /* GameScene.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				25EE06E61B0DA7E800775E06 /* EffectLayer.cpp in Sources */,
 				2542F05E1B0C75B1005A0CC1 /* StaticPersonInfo.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

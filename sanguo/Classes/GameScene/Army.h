@@ -14,7 +14,7 @@ class Army : public BaseObj
 {
     friend class GameScene;
 public:
-    void init(int personid, float xx, float yy, GameScene& scene);
+    void init(GameObjID oid, float xx, float yy);
 public:
     virtual void setPosition(float xx, float yy);
 
@@ -25,10 +25,11 @@ public:
     
     virtual void release();
 protected:
-	Army();
+	Army(GameScene& scene);
     virtual ~Army();
 protected:
-    std::vector<Person*>  m_lstPerson;
+    GameScene&              m_scene;
+    std::vector<Person*>    m_lstPerson;
 };
 
 #endif // __GAMESCENE_ARMY_H__

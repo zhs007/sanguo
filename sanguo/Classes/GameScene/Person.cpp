@@ -1,14 +1,15 @@
 ﻿#include "Person.h"
 #include "PersonMgr.h"
-#include "EffectMgr.h"
+#include "EffectLayer.h"
 
 USING_NS_CC;
 
 const int _PERSON_BASESPEED		=	100;		//! 基准速度（该速度下动画正常播放）
 const int _ARROW_SPEED			=	100;		//! 箭飞行的速度
 
-Person::Person()
-    : m_pSpr(NULL)
+Person::Person(GameScene& scene)
+    : m_scene(scene)
+    , m_pSpr(NULL)
 	, m_pRoot(NULL)
 	, m_pActionInfo(NULL)
 	, m_iAction(_PERSON_ACTION_WAIT)
@@ -28,7 +29,7 @@ Person::~Person()
 
 bool Person::init(int camp, int personid, Node* root)
 {
-	_ActionInfo* ainfo = PersonMgr::getSingleton().getActionInfo(personid);
+	PersonActionInfo* ainfo = PersonMgr::getSingleton().getActionInfo(personid);
 
 	if(ainfo == NULL)
 		return false;
@@ -229,7 +230,7 @@ void Person::attack(float dx, float dy)
 		if(movetime <= 0)
 			movetime = 100;
 
-		EffectMgr::getSingleton().addArrow(m_fX, m_fY, dx, dy, movetime, 200);
+		m_scene.addArrow(m_fX, m_fY, dx, dy, movetime, 200);
 	}
 }
 
