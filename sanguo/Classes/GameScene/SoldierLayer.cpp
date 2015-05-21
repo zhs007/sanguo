@@ -17,7 +17,7 @@ SoldierLayer::~SoldierLayer()
 //! 初始化
 bool SoldierLayer::init()
 {
-    if (!cocos2d::Layer::init())
+    if (!cocos2d::Node::init())
         return false;
     
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("res/soldier.plist", "res/soldier.pvr.ccz");

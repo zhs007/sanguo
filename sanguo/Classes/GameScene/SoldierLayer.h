@@ -10,7 +10,7 @@ USING_NS_CC;
 class Person;
 class GameScene;
 
-class SoldierLayer : public cocos2d::Layer
+class SoldierLayer : public cocos2d::Node
 {
 public:
     // implement the "static create()" method manually

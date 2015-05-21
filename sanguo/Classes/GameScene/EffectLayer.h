@@ -6,7 +6,7 @@
 
 USING_NS_CC;
 
-class EffectLayer : public cocos2d::Layer
+class EffectLayer : public cocos2d::Node
 {
 public:
     // implement the "static create()" method manually
