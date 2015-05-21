@@ -87,7 +87,7 @@ void GameScene::onIdle(float dt)
     int ot = dt * 1000;
     
     for (std::vector<Army*>::iterator it = m_lstArmy.begin(); it != m_lstArmy.end(); ++it) {
-        (*it)->onIdel(ot);
+        (*it)->onIdle(ot);
     }
 }
 
