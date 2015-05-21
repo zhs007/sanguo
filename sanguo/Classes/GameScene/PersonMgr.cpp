@@ -69,7 +69,7 @@ void PersonMgr::initActionInfo(const char* filename, bool refresh)
 //! 取动作信息
 PersonActionInfo* PersonMgr::getActionInfo(int id)
 {
-	std::map<int, PersonActionInfo>::iterator it = m_mapActionInfo.find(id);
+	std::unordered_map<int, PersonActionInfo>::iterator it = m_mapActionInfo.find(id);
 
 	if(it != m_mapActionInfo.end())
 		return &(it->second);

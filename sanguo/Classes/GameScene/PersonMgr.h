@@ -23,7 +23,7 @@ protected:
 	PersonMgr();
     virtual ~PersonMgr();
 protected:
-	std::map<int, PersonActionInfo>	m_mapActionInfo;	//! 动作信息
+	std::unordered_map<int, PersonActionInfo>	m_mapActionInfo;	//! 动作信息
 };
 
 #endif // __GAMESCENE_PERSONMGR_H__
