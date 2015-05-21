@@ -21,11 +21,16 @@ void Army::init(GameObjID oid, float xx, float yy)
     if(pPerson != NULL)
         pPerson->setPosition(xx, yy);
     
+    pPerson->moveTo(xx + 100, yy + 200, 10);
+    
     m_lstPerson.push_back(pPerson);
 }
 
 void Army::setPosition(float xx, float yy)
 {
+    m_ptPos.x = xx;
+    m_ptPos.y = yy;
+    
     for (std::vector<Person*>::iterator it = m_lstPerson.begin(); it != m_lstPerson.end(); ++it) {
         (*it)->setPosition(xx, yy);
     }

@@ -18,8 +18,8 @@ public:
 public:
     virtual void setPosition(float xx, float yy);
 
-	virtual float getPositionX() { return 0.0f; }
-	virtual float getPositionY() { return 0.0f; }
+	virtual float getPositionX() { return m_ptPos.x; }
+	virtual float getPositionY() { return m_ptPos.y; }
     
     virtual void onIdle(int ot);
     
@@ -30,6 +30,8 @@ protected:
 protected:
     GameScene&              m_scene;
     std::vector<Person*>    m_lstPerson;
+    
+    cocos2d::Vec2           m_ptPos;
 };
 
 #endif // __GAMESCENE_ARMY_H__
