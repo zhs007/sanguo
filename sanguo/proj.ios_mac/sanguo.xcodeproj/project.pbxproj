@@ -271,8 +271,6 @@
 		25F71DF61B0480480070DAEE /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
-				25EE06EB1B0DD9F600775E06 /* GroundLayer.cpp */,
-				25EE06EC1B0DD9F600775E06 /* GroundLayer.h */,
 				25EB52561B0C23A100897A30 /* Army.cpp */,
 				25EB52571B0C23A100897A30 /* Army.h */,
 				25F71E0B1B04962B0070DAEE /* BaseDef.h */,
@@ -282,6 +280,8 @@
 				25EE06E41B0DA7E800775E06 /* EffectLayer.h */,
 				25F71E071B048A1F0070DAEE /* GameScene.cpp */,
 				25F71E081B048A1F0070DAEE /* GameScene.h */,
+				25EE06EB1B0DD9F600775E06 /* GroundLayer.cpp */,
+				25EE06EC1B0DD9F600775E06 /* GroundLayer.h */,
 				25F71DFF1B0486DB0070DAEE /* Person.cpp */,
 				25F71E001B0486DB0070DAEE /* Person.h */,
 				25F71E031B04899D0070DAEE /* PersonMgr.cpp */,

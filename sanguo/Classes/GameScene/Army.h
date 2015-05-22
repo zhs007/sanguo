@@ -14,7 +14,7 @@ class Army : public BaseObj
 {
     friend class GameScene;
 public:
-    void init(GameObjID oid, float xx, float yy);
+    void init(GameObjID oid, int nums, float xx, float yy);
 public:
     virtual void setPosition(float xx, float yy);
 
@@ -25,10 +25,12 @@ public:
     
     virtual void release();
 protected:
-	Army(GameScene& scene);
+	Army(GameScene& scene, SoldierInfo& si);
     virtual ~Army();
 protected:
     GameScene&              m_scene;
+    SoldierInfo&            m_infoSoldier;
+    
     std::vector<Person*>    m_lstPerson;
     
     cocos2d::Vec2           m_ptPos;

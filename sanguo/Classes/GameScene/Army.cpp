@@ -5,8 +5,9 @@
 
 USING_NS_CC;
 
-Army::Army(GameScene& scene)
+Army::Army(GameScene& scene, SoldierInfo& si)
     : m_scene(scene)
+    , m_infoSoldier(si)
 {
 }
 
@@ -14,16 +15,19 @@ Army::~Army()
 {
 }
 
-void Army::init(GameObjID oid, float xx, float yy)
+void Army::init(GameObjID oid, int nums, float xx, float yy)
 {
-    Person* pPerson = m_scene.newSoldier(oid, 0);
+//    SoldierInfo* pSI = PersonMgr::getSingleton().getSoldierInfo(oid);
+//    if (pSI == NULL)
+//        return ;
     
-    if(pPerson != NULL)
-        pPerson->setPosition(xx, yy);
+    for (int i = 0; i < nums; ++i) {
+        Person* pPerson = m_scene.newSoldier(m_infoSoldier.idActionInfo, 0);
+        
+        m_lstPerson.push_back(pPerson);
+    }
     
-    pPerson->moveTo(xx + 100, yy + 200, 10);
-    
-    m_lstPerson.push_back(pPerson);
+    setPosition(xx, yy);
 }
 
 void Army::setPosition(float xx, float yy)
@@ -31,8 +35,14 @@ void Army::setPosition(float xx, float yy)
     m_ptPos.x = xx;
     m_ptPos.y = yy;
     
+    int index = 0;
     for (std::vector<Person*>::iterator it = m_lstPerson.begin(); it != m_lstPerson.end(); ++it) {
-        (*it)->setPosition(xx, yy);
+        float ox = _ARMY_ARRAY[index * 2] * m_infoSoldier.minRadius;
+        float oy = _ARMY_ARRAY[index * 2 + 1] * m_infoSoldier.minRadius;
+        
+        (*it)->setPosition(xx + ox, yy + oy);
+        
+        ++index;
     }
 }
 
