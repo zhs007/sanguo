@@ -18,12 +18,19 @@ public:
 	void initActionInfo(const char* filename, bool refresh);
 	//! 取动作信息
 	PersonActionInfo* getActionInfo(GameObjID oid);
+    
+    
+    //! 初始化士兵信息表
+    void initSoldierInfo(const char* filename, bool refresh);
+    //! 取士兵信息
+    SoldierInfo* getSoldierInfo(GameObjID oid);
 
 protected:
 	PersonMgr();
     virtual ~PersonMgr();
 protected:
 	std::unordered_map<int, PersonActionInfo>	m_mapActionInfo;	//! 动作信息
+    std::unordered_map<int, SoldierInfo>        m_mapSoldierInfo;	//! 士兵信息
 };
 
 #endif // __GAMESCENE_PERSONMGR_H__

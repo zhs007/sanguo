@@ -6,6 +6,7 @@ USING_NS_CC;
 PersonMgr::PersonMgr()
 {
     initActionInfo("actioninfo.csv", false);
+    initSoldierInfo("soldierinfo.csv", false);
 }
 
 PersonMgr::~PersonMgr()
@@ -76,3 +77,44 @@ PersonActionInfo* PersonMgr::getActionInfo(int id)
 
 	return NULL;
 }
+
+//! 初始化士兵信息表
+void PersonMgr::initSoldierInfo(const char* filename, bool refresh)
+{
+    if(!m_mapSoldierInfo.empty() && !refresh)
+        return ;
+    
+    BaseCSV csvdata;
+    csvdata.load(filename);
+    
+    m_mapSoldierInfo.clear();
+    
+    //! 第一行是表头
+    for(int i = 1; i < csvdata.m_iHeight; ++i)
+    {
+        std::pair<int, SoldierInfo> p;
+        
+        p.first = csvdata.getAsInt("gameobjid", i);
+        
+        p.second.oid = p.first;
+        
+        p.second.idActionInfo = csvdata.getAsInt("actioninfo", i);
+        p.second.minRadius = csvdata.getAsInt("minradius", i);
+        p.second.maxRadius = csvdata.getAsInt("maxradius", i);
+        p.second.speed = csvdata.getAsInt("speed", i);
+        
+        m_mapSoldierInfo.insert(p);
+    }
+}
+
+//! 取士兵信息
+SoldierInfo* PersonMgr::getSoldierInfo(GameObjID oid)
+{
+    std::unordered_map<int, SoldierInfo>::iterator it = m_mapSoldierInfo.find(oid);
+    
+    if(it != m_mapSoldierInfo.end())
+        return &(it->second);
+    
+    return NULL;
+}
+

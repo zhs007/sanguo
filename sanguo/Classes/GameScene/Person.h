@@ -46,7 +46,7 @@ public:
 	//! 死亡
 	void dead();
 protected:
-	Person(GameScene& scene);
+	Person(GameScene& scene, PersonActionInfo& pai);
     virtual ~Person();
 
 	//! 初始化资源
@@ -70,7 +70,7 @@ protected:
 	Node*						m_pRoot;
 	int							m_iCamp;		//! 阵营
 	int							m_iID;
-	PersonActionInfo*			m_pActionInfo;	//! 动作信息
+	PersonActionInfo&			m_actionInfo;	//! 动作信息
 
 	float						m_fX;			//! 坐标
 	float						m_fY;

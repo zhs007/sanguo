@@ -74,4 +74,15 @@ struct PersonActionInfo{
 	int				atime[_PERSON_ACTION_NUMS];		//! 动作帧间间隔
 };
 
+//! 士兵静态数据
+struct SoldierInfo{
+    GameObjID       oid;
+    
+    GameObjID       idActionInfo;       //! 对应的动画数据，由于可能多个士兵公用一套动画，所以这样设计
+    
+    int             minRadius;          //! 最小半径，进攻队列下，军团会挤到一起，这个是士兵的最小间距，像素单位
+    int             maxRadius;          //! 最大半径，行军队列下，军团会被拉开，这个是士兵的最大间距，像素单位
+    int             speed;              //! 行军速度，每秒位移多少像素
+};
+
 #endif // __GAMESCENE_BASEDEF_H__

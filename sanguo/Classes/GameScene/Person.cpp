@@ -7,11 +7,11 @@ USING_NS_CC;
 const int _PERSON_BASESPEED		=	100;		//! 基准速度（该速度下动画正常播放）
 const int _ARROW_SPEED			=	100;		//! 箭飞行的速度
 
-Person::Person(GameScene& scene)
+Person::Person(GameScene& scene, PersonActionInfo& pai)
     : m_scene(scene)
     , m_pSpr(NULL)
 	, m_pRoot(NULL)
-	, m_pActionInfo(NULL)
+	, m_actionInfo(pai)
 	, m_iAction(_PERSON_ACTION_WAIT)
 	, m_iFrame(0)
 	, m_iDir(0)
@@ -29,15 +29,15 @@ Person::~Person()
 
 bool Person::init(int camp, int personid, Node* root)
 {
-	PersonActionInfo* ainfo = PersonMgr::getSingleton().getActionInfo(personid);
+	//PersonActionInfo* ainfo = PersonMgr::getSingleton().getActionInfo(personid);
 
-	if(ainfo == NULL)
-		return false;
+	//if(ainfo == NULL)
+	//	return false;
 
 	m_pRoot = root;
 	m_iCamp = camp;
 	m_iID = personid;
-	m_pActionInfo = ainfo;
+	//m_pActionInfo = ainfo;
 
 	initRes();
 	refreshDisplay();
@@ -194,7 +194,7 @@ void Person::chgSpeed(int speed)
 	m_fMX = (m_fEX - m_fX) / m_iMoveTime;
 	m_fMY = (m_fEY - m_fY) / m_iMoveTime;
 
-	m_iRunActionTime = m_pActionInfo->atime[_PERSON_ACTION_RUN] * _PERSON_BASESPEED / m_iMoveSpeed;
+	m_iRunActionTime = m_actionInfo.atime[_PERSON_ACTION_RUN] * _PERSON_BASESPEED / m_iMoveSpeed;
 
 	if(m_iRunActionTime < 1)
 		m_iRunActionTime = 1;
@@ -222,7 +222,7 @@ void Person::attack(float dx, float dy)
 	chgAction(_PERSON_ACTION_ATTACK);
 
 	//! 如果是弓箭手则发射箭
-	if(m_pActionInfo->stype == 1)
+	if(m_actionInfo.stype == 1)
 	{
 		float dis = sqrt((m_fX - dx) * (m_fX - dx) + (m_fY - dy) * (m_fY - dy));
 		int movetime = dis * 1000 / _ARROW_SPEED;
@@ -254,9 +254,6 @@ void Person::initRes()
 	if(m_pRoot == NULL)
 		return ;
 
-	if(m_pActionInfo == NULL)
-		return ;
-
 	char tmp[32];
 
 	//! 初始化动作数据
@@ -264,14 +261,14 @@ void Person::initRes()
 	{
 		for(int j = 0; j < _PERSON_ACTION_NUMS; ++j)
 		{
-			int nums = m_pActionInfo->eindex[j] - m_pActionInfo->bindex[j] + 1;
+			int nums = m_actionInfo.eindex[j] - m_actionInfo.bindex[j] + 1;
 
 			if(nums <= 0)
 				continue ;
 
-			for(int k = m_pActionInfo->bindex[j]; k <= m_pActionInfo->eindex[j]; ++k)
+			for(int k = m_actionInfo.bindex[j]; k <= m_actionInfo.eindex[j]; ++k)
 			{
-				sprintf(tmp, "%s_%d_%d.png", m_pActionInfo->resname.c_str(), i, k);
+				sprintf(tmp, "%s_%d_%d.png", m_actionInfo.resname.c_str(), i, k);
 
 				SpriteFrame* frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(tmp);
 
@@ -365,7 +362,7 @@ void Person::onIdle_Action(int ot)
 	m_iActTime += ot;
 
 	//! 确定帧间
-	int frametime = m_pActionInfo->atime[m_iAction];
+	int frametime = m_actionInfo.atime[m_iAction];
 
 	////! 移动的帧间特殊确定
 	//if(m_iAction == _PERSON_ACTION_RUN)

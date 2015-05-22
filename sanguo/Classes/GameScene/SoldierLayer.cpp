@@ -1,6 +1,7 @@
 ﻿#include "SoldierLayer.h"
 #include "Person.h"
 #include "GameScene.h"
+#include "PersonMgr.h"
 
 USING_NS_CC;
 
@@ -45,10 +46,16 @@ void SoldierLayer::releaseAllSoldier()
 //! 创建一个人物 oid士兵ID camp阵营
 Person* SoldierLayer::newSoldier(GameScene& scene, GameObjID oid, int camp)
 {
-	Person* pPerson = new Person(scene);
-	
-	if(pPerson->init(camp, oid, m_sbnPerson))
-		return pPerson;
+    PersonActionInfo* pPAI = PersonMgr::getSingleton().getActionInfo(oid);
+    if (pPAI != NULL) {
+        Person* pPerson = new Person(scene, *pPAI);
+        
+        if(pPerson->init(camp, oid, m_sbnPerson))
+            return pPerson;
+        
+        //! 如果上面没返回，这里应该delete
+        delete pPerson;
+    }
 
 	return NULL;
 }
