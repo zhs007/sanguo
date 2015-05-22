@@ -14,7 +14,7 @@ class Army : public BaseObj
 {
     friend class GameScene;
 public:
-    void init(GameObjID oid, int nums, float xx, float yy);
+    void init(GameObjID oid, int nums, float xx, float yy, float dirx, float diry);
 public:
     virtual void setPosition(float xx, float yy);
 
@@ -34,6 +34,8 @@ protected:
     std::vector<Person*>    m_lstPerson;
     
     cocos2d::Vec2           m_ptPos;
+    
+    Quaternion              m_quat;
 };
 
 #endif // __GAMESCENE_ARMY_H__

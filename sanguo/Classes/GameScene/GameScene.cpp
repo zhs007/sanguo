@@ -53,7 +53,7 @@ bool GameScene::init()
 //		if(pPerson != NULL)
 //			pPerson->setPosition(100 + i * 100, 100 + i * 100);
         
-        addArmy(10010001 + i, 10 + i, 100 + i * 100, 100 + i * 100);
+        addArmy(10010001 + i, 10, 1000 + rand() % 1000, 1000 + rand() % 1000);
 	}
     
     //Person* pPerson = PersonMgr::getSingleton().newPerson(0);
@@ -105,7 +105,7 @@ void GameScene::addArmy(int gameObjID, int nums, float xx, float yy)
         return ;
     
     Army* pArmy = new Army(*this, *pSI);
-    pArmy->init(gameObjID, nums, xx, yy);
+    pArmy->init(gameObjID, nums, xx, yy, rand() % 1000 - 500, rand() % 1000 - 500);
     
     m_lstArmy.push_back(pArmy);
 }
