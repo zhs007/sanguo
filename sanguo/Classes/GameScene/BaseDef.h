@@ -15,6 +15,7 @@
 //
 // 首位为1表示这是一个内部对象
 // 前4位为1000，表示这是一个角色资源，也就是PersonActionInfo里面的ID标示
+// 前4位为1001，表示这是一个士兵
 
 typedef int GameObjID;
 

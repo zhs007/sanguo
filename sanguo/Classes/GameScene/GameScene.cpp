@@ -19,8 +19,6 @@ bool GameScene::init()
     if(!LayerCtrl::init())
         return false;
     
-    //m_pRoot = pRoot;
-    
     initMap();
     
     m_pLayerSoldier = SoldierLayer::create();
