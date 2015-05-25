@@ -1,5 +1,6 @@
 /**
- * Created by zhs007 on 15/5/25.
+ * Frozen
+ * a extremely simple html5 canvas engine.
  */
 
 var FrNode = {
