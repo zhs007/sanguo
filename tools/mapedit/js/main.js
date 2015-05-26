@@ -2,24 +2,43 @@
  * Created by zhs007 on 15/5/25.
  */
 
-var frCanvas;
+var LayerMapEditor = {
+    create: function () {
+        var layer = FrLayer.create();
+
+        var imgBack = FrSprite.create('res/worldmap.jpg');
+        layer.addChild(imgBack);
+
+        return layer;
+    }
+}
+
+var MapEditor = {
+    create: function (nameCanvas) {
+        var app = FrApplication.create();
+
+        app.canvas = FrCanvas.create("editorCanvas");
+        app.layer = LayerMapEditor.create();
+
+        app.canvas.curScene.addChild(app.layer);
+
+        app.onIdle = MapEditor.onIdle;
+
+        setInterval(function () { app.onIdle(); });
+
+        return app;
+    },
+
+    onIdle: function () {
+        this.canvas.onIdle();
+
+        var status = document.getElementById('status');
+        status.innerHTML = 'FPS:' + this.canvas.curScene.lastFPS;
+    }
+};
+
+//var frCanvas;
 
 $(document).ready(function() {
-    frCanvas = FrCanvas.create("editorCanvas");
-    frSprite = FrSprite.create('res/worldmap.jpg');
-    frCanvas.curScene.addChild(frSprite);
-
-    setInterval(function () {
-        frCanvas.onIdle();
-    });
-
-
-    //frCanvas.ok();
-    //var c = document.getElementById("editorCanvas");
-    //var cxt = c.getContext("2d");
-    //cxt.fillStyle = "#FFFF00";
-    //cxt.fillRect(0,0,150,75);
-
-    //var s0 = Object.create(Sprite);
-    //var s1 = Object.create(Sprite);
+    var app = MapEditor.create('editorCanvas');
 });

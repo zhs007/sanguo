@@ -52,7 +52,196 @@ var FrScene = {
     create: function () {
         var obj = FrNode.create();
 
+        obj.lastTimestamp = 0;
+        obj.curFrames = 0;
+        obj.lastSecond = 0;
+        obj.lastFPS = 0;
+
+        obj.onRender_FrNode = obj.onRender;
+        obj.onRender = FrScene.onRender;
+
         return obj;
+    },
+
+    onRender: function (canvas) {
+        var d1 = new Date();
+        var ts1 = d1.getTime();
+
+        if (this.curFrames == 0) {
+            this.lastSecond = ts1;
+            this.curFrames = 1;
+        }
+        else {
+            this.curFrames += 1;
+
+            var off = ts1 - this.lastSecond;
+            if (off >= 1000) {
+                this.lastFPS = (this.curFrames * 1000 / off).toFixed(2);
+                this.lastSecond += 1000;
+                this.curFrames = 1;
+            }
+        }
+
+        this.onRender_FrNode(canvas);
+
+        var d2 = new Date();
+        var ts2 = d2.getTime();
+
+        this.lastTimestamp = ts2 - ts1;
+    }
+};
+
+var FrCtrl = {
+    singleton: undefined,
+
+    getSingleton: function () {
+        if (FrCtrl.singleton != undefined) {
+            return FrCtrl.singleton;
+        }
+
+        var objMain = document;
+        var obj = {};
+
+        obj.lstTouches = [];
+        obj.lstListener = [];
+        obj.objMain = objMain;
+
+        obj.release = FrCtrl.release;
+        obj.addListener = FrCtrl.addListener;
+        obj.removeListener = FrCtrl.removeListener;
+
+        objMain.addEventListener('touchstart', FrCtrl.onTouchStart, false);
+        objMain.addEventListener('touchmove', FrCtrl.onTouchMove, false);
+        objMain.addEventListener('touchend', FrCtrl.onTouchEnd, false);
+        objMain.addEventListener('touchcancel', FrCtrl.onTouchCancel, false);
+
+        objMain.addEventListener('mousedown', FrCtrl.onMouseDown, false);
+        objMain.addEventListener('mousemove', FrCtrl.onMouseMove, false);
+        objMain.addEventListener('mouseup', FrCtrl.onMouseUp, false);
+
+        this.singleton = obj;
+
+        return obj;
+    },
+
+    release: function () {
+        var frCtrl = FrCtrl.singleton;
+        var objMain = frCtrl.objMain;
+
+        objMain.removeEventListener('touchstart', FrCtrl.onTouchStart, false);
+        objMain.removeEventListener('touchmove', FrCtrl.onTouchMove, false);
+        objMain.removeEventListener('touchend', FrCtrl.onTouchEnd, false);
+        objMain.removeEventListener('touchcancel', FrCtrl.onTouchCancel, false);
+
+        objMain.removeEventListener('mousedown', FrCtrl.onMouseDown, false);
+        objMain.removeEventListener('mousemove', FrCtrl.onMouseMove, false);
+        objMain.removeEventListener('mouseup', FrCtrl.onMouseUp, false);
+    },
+
+    addListener: function (listener) {
+        this.lstListener.push(listener);
+    },
+
+    removeListener: function (listener) {
+        this.lstListener.split(listener);
+    },
+
+    onTouchStart: function (event) {
+        var frCtrl = FrCtrl.singleton;
+
+        for (var i = 0; i < frCtrl.lstListener.length; ++i) {
+            var listener = frCtrl.lstListener[i];
+            if (listener.hasOwnProperty('onTouchBegin')) {
+                listener.onTouchBegin();
+            }
+        }
+    },
+
+    onTouchMove: function (event) {
+        var frCtrl = FrCtrl.singleton;
+
+        for (var i = 0; i < frCtrl.lstListener.length; ++i) {
+            var listener = frCtrl.lstListener[i];
+            if (listener.hasOwnProperty('onTouchMove')) {
+                listener.onTouchMove();
+            }
+        }
+    },
+
+    onTouchEnd: function (event) {
+        var frCtrl = FrCtrl.singleton;
+
+        for (var i = 0; i < frCtrl.lstListener.length; ++i) {
+            var listener = frCtrl.lstListener[i];
+            if (listener.hasOwnProperty('onTouchEnd')) {
+                listener.onTouchEnd();
+            }
+        }
+    },
+
+    onTouchCancel: function (event) {
+        var frCtrl = FrCtrl.singleton;
+
+        for (var i = 0; i < frCtrl.lstListener.length; ++i) {
+            var listener = frCtrl.lstListener[i];
+            if (listener.hasOwnProperty('onTouchCancel')) {
+                listener.onTouchCancel();
+            }
+        }
+    },
+
+    onMouseDown: function (event) {
+        var frCtrl = FrCtrl.singleton;
+
+        for (var i = 0; i < frCtrl.lstListener.length; ++i) {
+            var listener = frCtrl.lstListener[i];
+            if (listener.hasOwnProperty('onTouchBegin')) {
+                listener.onTouchBegin();
+            }
+        }
+    },
+
+    onMouseMove: function (event) {
+        var frCtrl = FrCtrl.singleton;
+
+        for (var i = 0; i < frCtrl.lstListener.length; ++i) {
+            var listener = frCtrl.lstListener[i];
+            if (listener.hasOwnProperty('onTouchMove')) {
+                listener.onTouchMove();
+            }
+        }
+    },
+
+    onMouseUp: function (event) {
+        var frCtrl = FrCtrl.singleton;
+
+        for (var i = 0; i < frCtrl.lstListener.length; ++i) {
+            var listener = frCtrl.lstListener[i];
+            if (listener.hasOwnProperty('onTouchEnd')) {
+                listener.onTouchEnd();
+            }
+        }
+    }
+};
+
+var FrLayer = {
+    create: function () {
+        var obj = FrNode.create();
+
+        obj.setEnableTouch = FrLayer.setEnableTouch;
+
+        return obj;
+    },
+
+    setEnableTouch: function (isEnable) {
+        var frCtrl = FrCtrl.singleton;
+
+        if (isEnable) {
+            frCtrl.addListener(this);
+        }
+        else {
+            frCtrl.removeListener(this);
+        }
     }
 };
 
@@ -64,6 +253,7 @@ var FrCanvas = {
         obj.context = obj.canvas.getContext('2d');
 
         obj.curScene = FrScene.create();
+        obj.mgrCtrl = FrCtrl.getSingleton();
 
         obj.onIdle = FrCanvas.onIdle;
 
@@ -73,5 +263,13 @@ var FrCanvas = {
     onIdle: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.curScene.onRender(this);
+    }
+};
+
+var FrApplication = {
+    create: function () {
+        var obj = {};
+
+        return obj;
     }
 };
