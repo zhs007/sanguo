@@ -6,10 +6,34 @@ var LayerMapEditor = {
     create: function () {
         var layer = FrLayer.create();
 
+        layer.onTouchBegin = LayerMapEditor.onTouchBegin;
+        layer.onTouchMove = LayerMapEditor.onTouchMove;
+        layer.onTouchEnd = LayerMapEditor.onTouchEnd;
+        layer.onTouchCancel = LayerMapEditor.onTouchCancel;
+
+        layer.setEnableTouch(true);
+
         var imgBack = FrSprite.create('res/worldmap.jpg');
         layer.addChild(imgBack);
 
+        layer.imgBack = imgBack;
+
         return layer;
+    },
+
+    onTouchBegin: function (event) {
+        //console.log('onMouseDown');
+    },
+
+    onTouchMove: function (event) {
+        this.imgBack.x += (event.ox);
+        this.imgBack.y += (event.oy);
+    },
+
+    onTouchEnd: function (event) {
+    },
+
+    onTouchCancel: function (event) {
     }
 }
 
