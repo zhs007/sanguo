@@ -11,6 +11,8 @@ var FrSpriteFrame = {
         obj.by = by;
         obj.width = w;
         obj.height = h;
+        obj.dw = w;
+        obj.dh = h;
 
         return obj;
     }
@@ -42,17 +44,42 @@ var FrNode = {
     }
 };
 
+var FrDraw = {
+    create: function () {
+        var obj = FrNode.create();
+
+        obj.onDraw = undefined;
+
+        obj.onRender_FrNode = obj.onRender;
+        obj.onRender = FrDraw.onRender;
+
+        return obj;
+    },
+
+    onRender: function (canvas) {
+        if (this.onDraw != undefined) {
+            this.onDraw(canvas);
+        }
+
+        this.onRender_FrNode(canvas);
+    }
+};
+
 var FrSprite = {
-    create: function (imgName) {
+    create: function (imgName, onload) {
         var obj = FrNode.create();
 
         obj.onLoadComplete = FrSprite.onLoadComplete;
+        obj.curFrame = undefined;
 
         obj.img = new Image();
-        obj.img.onload = function () { obj.onLoadComplete(); };
+        obj.img.onload = function () {
+            obj.onLoadComplete();
+            if (onload != undefined) {
+                onload();
+            }
+        };
         obj.img.src = imgName;
-
-        obj.curFrame = undefined;
 
         obj.onRender_FrNode = obj.onRender;
         obj.onRender = FrSprite.onRender;
@@ -62,7 +89,9 @@ var FrSprite = {
 
     onRender: function (canvas) {
         if (this.img.complete && this.curFrame != undefined) {
-            canvas.context.drawImage(this.img, this.curFrame.bx, this.curFrame.by, this.curFrame.width, this.curFrame.height, this.x, this.y, this.curFrame.width, this.curFrame.height);
+            canvas.context.drawImage(this.img,
+                this.curFrame.bx, this.curFrame.by, this.curFrame.width, this.curFrame.height,
+                this.x, this.y, this.curFrame.dw, this.curFrame.dh);
         }
 
         this.onRender_FrNode(canvas);
@@ -304,9 +333,25 @@ var FrCanvas = {
         obj.curScene = FrScene.create();
         obj.mgrCtrl = FrCtrl.getSingleton();
 
+        obj.fillRect = FrCanvas.fillRect;
+        obj.strokeRect = FrCanvas.strokeRect;
+
         obj.onIdle = FrCanvas.onIdle;
 
         return obj;
+    },
+
+    fillRect: function (sc, fc, lw, x, y, w, h) {
+        this.context.fillStyle = fc;
+        this.context.strokeStyle = sc;
+        this.context.lineWidth = lw;
+        this.context.fillRect(x, y, w, h);
+    },
+
+    strokeRect: function (sc, lw, x, y, w, h) {
+        this.context.strokeStyle = sc;
+        this.context.lineWidth = lw;
+        this.context.strokeRect(x, y, w, h);
     },
 
     onIdle: function () {
