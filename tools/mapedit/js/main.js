@@ -21,7 +21,7 @@ var SM_ScreenRect = {
 
 var LayerSmallMapEditor = {
     create: function (frCanvas) {
-        var layer = FrLayer.create();
+        var layer = FrLayer.create('smallLayer', 100);
 
         layer.onTouchBegin = LayerSmallMapEditor.onTouchBegin;
         layer.onTouchMove = LayerSmallMapEditor.onTouchMove;
@@ -71,7 +71,11 @@ var LayerSmallMapEditor = {
     },
 
     onTouchBegin: function (event) {
+        if (event.x >= document.documentElement.clientWidth - this.imgBack.curFrame.dw && event.y >= this.imgBack.y && event.x <= document.documentElement.clientWidth && event.y <= this.imgBack.y + this.imgBack.curFrame.dh) {
+            return true;
+        }
         //console.log('onMouseDown');
+        return false;
     },
 
     onTouchMove: function (event) {
@@ -80,6 +84,14 @@ var LayerSmallMapEditor = {
 
         this.screenRect.x += (event.ox);
         this.screenRect.y += (event.oy);
+
+        var app = MapEditor.singleton;
+
+        app.layer.imgBack.x = -this.screenRect.x * app.layer.imgBack.curFrame.width / this.imgBack.curFrame.dw;
+        app.layer.imgBack.y = -this.screenRect.y * app.layer.imgBack.curFrame.height / this.imgBack.curFrame.dh;
+
+        //this.screenRect.x = -app.layer.imgBack.x * this.screenRect.w / document.body.clientWidth;
+        //this.screenRect.y = -app.layer.imgBack.y * this.screenRect.w / document.body.clientWidth;
     },
 
     onTouchEnd: function (event) {
@@ -91,7 +103,7 @@ var LayerSmallMapEditor = {
 
 var LayerMapEditor = {
     create: function () {
-        var layer = FrLayer.create();
+        var layer = FrLayer.create('mainLayer', 1);
 
         layer.onTouchBegin = LayerMapEditor.onTouchBegin;
         layer.onTouchMove = LayerMapEditor.onTouchMove;
@@ -110,6 +122,7 @@ var LayerMapEditor = {
 
     onTouchBegin: function (event) {
         //console.log('onMouseDown');
+        return true;
     },
 
     onTouchMove: function (event) {

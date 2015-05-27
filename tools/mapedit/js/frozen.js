@@ -37,9 +37,9 @@ var FrNode = {
         this.lstChild.push(nodeChild);
     },
 
-    onRender: function (canvas) {
+    onRender: function (frCanvas) {
         for (var i = 0; i < this.lstChild.length; ++i) {
-            this.lstChild[i].onRender(canvas);
+            this.lstChild[i].onRender(frCanvas);
         }
     }
 };
@@ -56,12 +56,12 @@ var FrDraw = {
         return obj;
     },
 
-    onRender: function (canvas) {
+    onRender: function (frCanvas) {
         if (this.onDraw != undefined) {
-            this.onDraw(canvas);
+            this.onDraw(frCanvas);
         }
 
-        this.onRender_FrNode(canvas);
+        this.onRender_FrNode(frCanvas);
     }
 };
 
@@ -87,14 +87,14 @@ var FrSprite = {
         return obj;
     },
 
-    onRender: function (canvas) {
+    onRender: function (frCanvas) {
         if (this.img.complete && this.curFrame != undefined) {
-            canvas.context.drawImage(this.img,
+            frCanvas.context.drawImage(this.img,
                 this.curFrame.bx, this.curFrame.by, this.curFrame.width, this.curFrame.height,
                 this.x, this.y, this.curFrame.dw, this.curFrame.dh);
         }
 
-        this.onRender_FrNode(canvas);
+        this.onRender_FrNode(frCanvas);
     },
 
     onLoadComplete: function () {
@@ -121,7 +121,7 @@ var FrScene = {
         return obj;
     },
 
-    onRender: function (canvas) {
+    onRender: function (frCanvas) {
         var d1 = new Date();
         var ts1 = d1.getTime();
 
@@ -140,7 +140,7 @@ var FrScene = {
             }
         }
 
-        this.onRender_FrNode(canvas);
+        this.onRender_FrNode(frCanvas);
 
         var d2 = new Date();
         var ts2 = d2.getTime();
@@ -196,12 +196,30 @@ var FrCtrl = {
         objMain.removeEventListener('mouseup', FrCtrl.onMouseUp, false);
     },
 
-    addListener: function (listener) {
-        this.lstListener.push(listener);
+    addListener: function (id, listener, order) {
+        if (order == undefined) {
+            order = 0;
+        }
+
+        this.lstListener.push({id: id, func: listener, isBegin: false, zOrder: order});
+        this.lstListener.sort(function (a, b) {
+            return b.zOrder - a.zOrder;
+        });
     },
 
-    removeListener: function (listener) {
-        this.lstListener.split(listener);
+    removeListener: function (id) {
+        for (var i = 0; i < this.lstListener.length; ++i) {
+            var listener = this.lstListener[i];
+            if (listener.id == id) {
+                this.lstListener.splice(i, 1);
+
+                break;
+            }
+        }
+
+        this.lstListener.sort(function (a, b) {
+            return b.zOrder - a.zOrder;
+        });
     },
 
     onTouchStart: function (event) {
@@ -209,8 +227,11 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.hasOwnProperty('onTouchBegin')) {
-                listener.onTouchBegin();
+            if (listener.func.hasOwnProperty('onTouchBegin')) {
+                if (listener.func.onTouchBegin()) {
+                    listener.isBegin = true;
+                    break;
+                }
             }
         }
     },
@@ -220,8 +241,8 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.hasOwnProperty('onTouchMove')) {
-                listener.onTouchMove();
+            if (listener.isBegin && listener.func.hasOwnProperty('onTouchMove')) {
+                listener.func.onTouchMove();
             }
         }
     },
@@ -231,8 +252,9 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.hasOwnProperty('onTouchEnd')) {
-                listener.onTouchEnd();
+            if (listener.isBegin && listener.func.hasOwnProperty('onTouchEnd')) {
+                listener.func.onTouchEnd();
+                listener.isBegin = false;
             }
         }
     },
@@ -242,8 +264,9 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.hasOwnProperty('onTouchCancel')) {
-                listener.onTouchCancel();
+            if (listener.isBegin && listener.func.hasOwnProperty('onTouchCancel')) {
+                listener.func.onTouchCancel();
+                listener.isBegin = false;
             }
         }
     },
@@ -255,8 +278,11 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.hasOwnProperty('onTouchBegin')) {
-                listener.onTouchBegin(t);
+            if (listener.func.hasOwnProperty('onTouchBegin')) {
+                if (listener.func.onTouchBegin(t)) {
+                    listener.isBegin = true;
+                    break;
+                }
             }
         }
     },
@@ -276,14 +302,18 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.hasOwnProperty('onTouchMove')) {
-                listener.onTouchMove(t);
+            if (listener.isBegin && listener.func.hasOwnProperty('onTouchMove')) {
+                listener.func.onTouchMove(t);
             }
         }
     },
 
     onMouseUp: function (event) {
         var frCtrl = FrCtrl.singleton;
+        if (frCtrl.lstTouches.length <= 0) {
+            return ;
+        }
+
         var t = frCtrl.lstTouches[0];
 
         t.ox = event.clientX - t.x;
@@ -293,8 +323,9 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.hasOwnProperty('onTouchEnd')) {
-                listener.onTouchEnd(t);
+            if (listener.isBegin && listener.func.hasOwnProperty('onTouchEnd')) {
+                listener.func.onTouchEnd(t);
+                listener.isBegin = false;
             }
         }
 
@@ -303,10 +334,12 @@ var FrCtrl = {
 };
 
 var FrLayer = {
-    create: function () {
+    create: function (idName, zOrder) {
         var obj = FrNode.create();
 
         obj.setEnableTouch = FrLayer.setEnableTouch;
+        obj.idName = idName;
+        obj.zOrder = zOrder;
 
         return obj;
     },
@@ -315,10 +348,10 @@ var FrLayer = {
         var frCtrl = FrCtrl.singleton;
 
         if (isEnable) {
-            frCtrl.addListener(this);
+            frCtrl.addListener(this.idName, this, this.zOrder);
         }
         else {
-            frCtrl.removeListener(this);
+            frCtrl.removeListener(this.idName);
         }
     }
 };
