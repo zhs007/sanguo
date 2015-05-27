@@ -234,6 +234,10 @@ var FrCtrl = {
 
     onMouseMove: function (event) {
         var frCtrl = FrCtrl.singleton;
+        if (frCtrl.lstTouches.length <= 0) {
+            return ;
+        }
+
         var t = frCtrl.lstTouches[0];
 
         t.ox = event.clientX - t.x;

@@ -38,7 +38,13 @@ var LayerMapEditor = {
 }
 
 var MapEditor = {
-    create: function (nameCanvas) {
+    singleton: undefined,
+
+    init: function (nameCanvas) {
+        if (MapEditor.singleton != undefined) {
+            return singleton;
+        }
+
         var app = FrApplication.create();
 
         app.canvas = FrCanvas.create("editorCanvas");
@@ -50,19 +56,33 @@ var MapEditor = {
 
         setInterval(function () { app.onIdle(); });
 
+        MapEditor.singleton = app;
+
+        window.onresize = MapEditor.onResize;
+        MapEditor.onResize();
+
         return app;
     },
 
     onIdle: function () {
         this.canvas.onIdle();
 
-        var status = document.getElementById('status');
-        status.innerHTML = 'FPS:' + this.canvas.curScene.lastFPS;
+        //var status = document.getElementById('status');
+        //status.innerHTML = 'FPS:' + this.canvas.curScene.lastFPS;
+    },
+
+    onResize: function () {
+        var app = MapEditor.singleton;
+
+        document.body.style.overflow = 'hidden';
+        app.canvas.canvas.width = document.body.clientWidth;
+        app.canvas.canvas.height = document.body.clientHeight;
+        //document.body.style.overflow = 'hidden';
     }
 };
 
 //var frCanvas;
 
 $(document).ready(function() {
-    var app = MapEditor.create('editorCanvas');
+    MapEditor.init('editorCanvas');
 });
