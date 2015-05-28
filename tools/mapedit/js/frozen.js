@@ -25,18 +25,19 @@ var FrNode = {
         obj.lstChild = [];
 
         obj.__proto__ = FrNode;
-        //obj.addChild = FrNode.addChild;
-        //obj.onRender = FrNode.onRender;
 
         obj.x = 0;
         obj.y = 0;
         obj.w = 0;
         obj.h = 0;
 
+        obj.isFullScreen = false;   //! 如果是全屏节点，isIn的时候必然返回true
         obj.zOrder = 0;
 
         obj.canTap = false;
-        obj.onTap = undefined;
+        obj._funcTap = undefined;
+        obj._funcTapThis = undefined;
+        obj._tapDownChild = undefined;   //! 如果有子节点处理了TapDown事件，这个就是那个子节点
 
         obj.parent = undefined;
 
@@ -45,8 +46,10 @@ var FrNode = {
 
     addChild: function (nodeChild) {
         if (nodeChild.parent != undefined) {
-
+            return ;
         }
+
+        nodeChild.parent = this;
 
         this.lstChild.push(nodeChild);
     },
@@ -59,7 +62,67 @@ var FrNode = {
     },
 
     isIn: function (xx, yy) {
+        if (this.isFullScreen) {
+            return true;
+        }
+
         return xx >= this.x && xx < this.x + this.w && yy >= this.y && yy < this.y + this.h;
+    },
+
+    setCanTap: function (canTap, funcTap, funcTapThis) {
+        this.canTap = canTap;
+
+        //! 如果是允许点击，一直向上遍历到FrLayer，全部节点都设置为canTap
+        if (canTap) {
+            if (funcTap != undefined) {
+                this._funcTap = funcTap;
+            }
+
+            if (funcTapThis != undefined) {
+                this._funcTapThis = funcTapThis;
+            }
+
+            var p = this.parent;
+            if (p != undefined) {
+                if (p.isFrLayer == undefined || !p.isFrLayer()) {
+                    p.setCanTap(true, undefined, undefined);
+                }
+                else {
+                    p.canTap = true;
+                }
+            }
+        }
+    },
+
+    procTap: function (isDown, downx, downy, upx, upy) {
+        if (this._funcTap != undefined) {
+            if (this._funcTap.call(this._funcTapThis, isDown, downx, downy, upx, upy)) {
+                return true;
+            }
+        }
+
+        if (!isDown) {
+            if (this._tapDownChild != undefined) {
+                this._tapDownChild.procTap(isDown, downx, downy, upx, upy);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        for (var i = 0; i < this.lstChild.length; ++i) {
+            var n = this.lstChild[i];
+            if (n.canTap && n.isIn(event.x, event.y)) {
+                if (n.procTap(isDown, downx, downy, upx, upy)) {
+                    this._tapDownChild = n;
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     },
 
     onRender: function (frCanvas) {
@@ -76,8 +139,6 @@ var FrDraw = {
         obj.onDraw = undefined;
 
         obj.__proto__ = FrDraw;
-        //obj.onRender_FrNode = obj.onRender;
-        //obj.onRender = FrDraw.onRender;
 
         return obj;
     },
@@ -88,7 +149,6 @@ var FrDraw = {
         }
 
         FrNode.onRender.call(this, frCanvas);
-        //callParentFunc(this, 'onRender', frCanvas);
     }
 };
 
@@ -99,7 +159,7 @@ var FrSprite = {
         var obj = FrNode.create();
 
         obj.__proto__ = FrSprite;
-        //obj.onLoadComplete = FrSprite.onLoadComplete;
+
         obj.curFrame = undefined;
 
         obj.img = new Image();
@@ -110,9 +170,6 @@ var FrSprite = {
             }
         };
         obj.img.src = imgName;
-
-        //obj.onRender_FrNode = obj.onRender;
-        //obj.onRender = FrSprite.onRender;
 
         return obj;
     },
@@ -131,6 +188,9 @@ var FrSprite = {
         if (this.img.complete) {
             if (this.curFrame == undefined) {
                 this.curFrame = FrSpriteFrame.create(0, 0, this.img.width, this.img.height);
+
+                this.w = this.img.width;
+                this.h = this.img.height;
             }
         }
     }
@@ -148,8 +208,6 @@ var FrScene = {
         obj.lastFPS = 0;
 
         obj.__proto__ = FrScene;
-        //obj.onRender_FrNode = obj.onRender;
-        //obj.onRender = FrScene.onRender;
 
         return obj;
     },
@@ -247,7 +305,7 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.func.hasOwnProperty('onTouchBegin')) {
+            if (listener.func.onTouchBegin != undefined) {
                 if (listener.func.onTouchBegin()) {
                     listener.isBegin = true;
                     break;
@@ -261,7 +319,7 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.isBegin && listener.func.hasOwnProperty('onTouchMove')) {
+            if (listener.isBegin && listener.func.onTouchMove != undefined) {
                 listener.func.onTouchMove();
             }
         }
@@ -272,7 +330,7 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.isBegin && listener.func.hasOwnProperty('onTouchEnd')) {
+            if (listener.isBegin && listener.func.onTouchEnd != undefined) {
                 listener.func.onTouchEnd();
                 listener.isBegin = false;
             }
@@ -284,7 +342,7 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.isBegin && listener.func.hasOwnProperty('onTouchCancel')) {
+            if (listener.isBegin && listener.func.onTouchCancel != undefined) {
                 listener.func.onTouchCancel();
                 listener.isBegin = false;
             }
@@ -298,7 +356,7 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.func.hasOwnProperty('onTouchBegin')) {
+            if (listener.func.onTouchBegin != undefined) {
                 if (listener.func.onTouchBegin(t)) {
                     listener.isBegin = true;
                     break;
@@ -322,7 +380,7 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.isBegin && listener.func.hasOwnProperty('onTouchMove')) {
+            if (listener.isBegin && listener.func.onTouchMove != undefined) {
                 listener.func.onTouchMove(t);
             }
         }
@@ -343,7 +401,7 @@ var FrCtrl = {
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
-            if (listener.isBegin && listener.func.hasOwnProperty('onTouchEnd')) {
+            if (listener.isBegin && listener.func.onTouchEnd != undefined) {
                 listener.func.onTouchEnd(t);
                 listener.isBegin = false;
             }
@@ -358,15 +416,18 @@ var FrLayer = {
         var obj = FrNode.create();
 
         obj.__proto__ = FrLayer;
-        //obj.setEnableTouch = FrLayer.setEnableTouch;
+
         obj.idName = idName;
         obj.zOrder = zOrder;
         obj.frCtrl = frCtrl;
+        obj.isEnableTouch = false;
 
         return obj;
     },
 
     setEnableTouch: function (isEnable) {
+        this.isEnableTouch = isEnable;
+
         var frCtrl = this.frCtrl;
 
         if (isEnable) {
@@ -379,18 +440,53 @@ var FrLayer = {
 
     isFrLayer: function () {
         return true;
+    },
+
+    onTouchBegin: function (event) {
+        if (!this.isEnableTouch) {
+            return false;
+        }
+
+        if (this.canTap) {
+            if (this.isIn(event.x, event.y)) {
+                if (this.procTap(true, event.x, event.y, event.x, event.y)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    },
+
+    onTouchMove: function (event) {
+    },
+
+    onTouchEnd: function (event) {
+        if (!this.isEnableTouch) {
+            return ;
+        }
+
+        if (this.canTap) {
+            if (this.isIn(event.x, event.y)) {
+                this.procTap(false, event.bx, event.by, event.x, event.y);
+            }
+        }
+    },
+
+    onTouchCancel: function (event) {
+        if (!this.isEnableTouch) {
+            return ;
+        }
+
+        if (this.canTap) {
+            if (this.isIn(event.bx, event.by)) {
+                this.procTap(false, event.bx, event.by, -1, -1);
+            }
+        }
     }
 };
 
 FrLayer.__proto__ = FrNode;
-
-var FrUILayer = {
-    create: function (idName, zOrder, frCtrl) {
-        var obj = FrLayer.create(idName, zOrder, frCtrl);
-
-        return obj;
-    }
-};
 
 var FrCanvas = {
     create: function (nameCanvas) {

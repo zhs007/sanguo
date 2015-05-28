@@ -72,12 +72,6 @@ var LayerSmallMap = {
 
     onTouchBegin: function (event) {
         return true;
-
-        if (event.x >= document.documentElement.clientWidth - this.imgBack.curFrame.dw && event.y >= this.imgBack.y && event.x <= document.documentElement.clientWidth && event.y <= this.imgBack.y + this.imgBack.curFrame.dh) {
-            return true;
-        }
-        //console.log('onMouseDown');
-        return false;
     },
 
     onTouchMove: function (event) {
@@ -104,7 +98,38 @@ var LayerSmallMap = {
 };
 
 var LayerUI = {
+    create: function (frCanvas) {
+        var layer = FrLayer.create('uiLayer', 2, frCanvas.frCtrl);
 
+        layer.setEnableTouch(true);
+        layer.isFullScreen = true;
+
+        layer.img1 = FrSprite.create('res/city001.png');
+        layer.addChild(layer.img1);
+        layer.img1.x = 100;
+        layer.img1.y = 100;
+        layer.img1.setCanTap(true, LayerUI.onTapImg1, layer);
+
+        layer.img2 = FrSprite.create('res/city002.png');
+        layer.addChild(layer.img2);
+        layer.img2.x = 300;
+        layer.img2.y = 100;
+        layer.img2.setCanTap(true, LayerUI.onTapImg2, layer);
+
+        return layer;
+    },
+
+    onTapImg1: function () {
+        console.trace('onTapImg1');
+
+        return true;
+    },
+
+    onTapImg2: function () {
+        console.trace('onTapImg2');
+
+        return true;
+    }
 };
 
 var LayerMap = {
@@ -127,7 +152,6 @@ var LayerMap = {
     },
 
     onTouchBegin: function (event) {
-        //console.log('onMouseDown');
         return true;
     },
 
@@ -158,6 +182,8 @@ var MapEditor = {
         app.canvas = FrCanvas.create("editorCanvas");
         app.layer = LayerMap.create(app.canvas);
         app.canvas.curScene.addChild(app.layer);
+        app.uiLayer = LayerUI.create(app.canvas);
+        app.canvas.curScene.addChild(app.uiLayer);
 
         app.canvasSmall = FrCanvas.create("smallCanvas");
         app.layerSmall = LayerSmallMap.create(app.canvasSmall);
