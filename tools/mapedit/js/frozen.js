@@ -22,13 +22,15 @@ var FrNode = {
     create: function () {
         var obj = {};
 
-        obj.lstChild = [];
+        obj._lstChild = [];
 
         obj.__proto__ = FrNode;
 
+        obj._frCanvas = undefined;
+
         //! 相对父节点的坐标
-        obj.x = 0;
-        obj.y = 0;
+        obj._x = 0;
+        obj._y = 0;
 
         //! 宽度和高度
         obj.w = 0;
@@ -41,7 +43,7 @@ var FrNode = {
         obj.isFullScreen = false;   //! 如果是全屏节点，isIn的时候必然返回true
         obj.zOrder = 0;
 
-        obj.canTap = false;
+        obj._canTap = false;
         obj._funcTap = undefined;
         obj._funcTapThis = undefined;
         obj._tapDownChild = undefined;   //! 如果有子节点处理了TapDown事件，这个就是那个子节点
@@ -51,6 +53,13 @@ var FrNode = {
         return obj;
     },
 
+    setPosition: function (xx, yy) {
+        this._x = xx;
+        this._y = yy;
+
+        this.setFrCanvasRefutbish();
+    },
+
     addChild: function (nodeChild) {
         if (nodeChild.parent != undefined) {
             return ;
@@ -58,13 +67,25 @@ var FrNode = {
 
         nodeChild.parent = this;
 
-        this.lstChild.push(nodeChild);
+        this._lstChild.push(nodeChild);
+
+        if (this._frCanvas != undefined) {
+            nodeChild.setFrCanvas(this._frCanvas);
+
+            this._frCanvas.isNeedRefurbish = true;
+        }
     },
 
     removeChild: function (nodeChild) {
         if (nodeChild.parent == this) {
-            this.lstChild.split(nodeChild);
+            this._lstChild.split(nodeChild);
             nodeChild.parent = undefined;
+
+            if (this._frCanvas != undefined) {
+                nodeChild.clearFrCanvas();
+
+                this._frCanvas.isNeedRefurbish = true;
+            }
         }
     },
 
@@ -73,11 +94,11 @@ var FrNode = {
             return true;
         }
 
-        return xx >= this.x && xx < this.x + this.w && yy >= this.y && yy < this.y + this.h;
+        return xx >= this._x && xx < this._x + this.w && yy >= this._y && yy < this._y + this.h;
     },
 
     setCanTap: function (canTap, funcTap, funcTapThis) {
-        this.canTap = canTap;
+        this._canTap = canTap;
 
         //! 如果是允许点击，一直向上遍历到FrLayer，全部节点都设置为canTap
         if (canTap) {
@@ -95,7 +116,7 @@ var FrNode = {
                     p.setCanTap(true, undefined, undefined);
                 }
                 else {
-                    p.canTap = true;
+                    p._canTap = true;
                 }
             }
         }
@@ -118,23 +139,55 @@ var FrNode = {
             return false;
         }
 
-        for (var i = 0; i < this.lstChild.length; ++i) {
-            var n = this.lstChild[i];
-            if (n.canTap && n.isIn(event.x, event.y)) {
-                if (n.procTap(isDown, downx, downy, upx, upy)) {
-                    this._tapDownChild = n;
+        var frNodeThis = this;
+        this.forEachChild(function (frNode) {
+            if (frNode._canTap && frNode.isIn(event.x, event.y)) {
+                if (frNode.procTap(isDown, downx, downy, upx, upy)) {
+                    frNodeThis._tapDownChild = frNode;
 
                     return true;
                 }
             }
-        }
+
+            return false;
+        });
 
         return false;
     },
 
     onRender: function (frCanvas) {
-        for (var i = 0; i < this.lstChild.length; ++i) {
-            this.lstChild[i].onRender(frCanvas);
+        this.forEachChild(function (frNode) {
+            frNode.onRender(frCanvas);
+
+            return false;
+        });
+    },
+
+    forEachChild: function (func) {
+        for (var i = 0; i < this._lstChild.length; ++i) {
+            if (func(this._lstChild[i])) {
+                return ;
+            }
+        }
+    },
+
+    setFrCanvas: function (frCanvas) {
+        this._frCanvas = frCanvas;
+        this.forEachChild(function (frNode) {
+            frNode.setFrCanvas(frCanvas);
+        });
+    },
+
+    clearFrCanvas: function () {
+        this._frCanvas = undefined;
+        this.forEachChild(function (frNode) {
+            frNode.clearFrCanvas();
+        });
+    },
+
+    setFrCanvasRefutbish: function () {
+        if (this._frCanvas != undefined) {
+            this._frCanvas.isNeedRefurbish = true;
         }
     }
 };
@@ -185,7 +238,7 @@ var FrSprite = {
         if (this.img.complete && this.curFrame != undefined) {
             frCanvas.context.drawImage(this.img,
                 this.curFrame.bx, this.curFrame.by, this.curFrame.width, this.curFrame.height,
-                this.x, this.y, this.curFrame.dw, this.curFrame.dh);
+                this._x, this._y, this.curFrame.dw, this.curFrame.dh);
         }
 
         FrNode.onRender.call(this, frCanvas);
@@ -198,6 +251,8 @@ var FrSprite = {
 
                 this.w = this.img.width;
                 this.h = this.img.height;
+
+                this.setFrCanvasRefutbish();
             }
         }
     }
@@ -206,44 +261,47 @@ var FrSprite = {
 FrSprite.__proto__ = FrNode;
 
 var FrScene = {
-    create: function () {
+    create: function (frCanvas) {
         var obj = FrNode.create();
+
+        obj.__proto__ = FrScene;
+
+        obj.setFrCanvas(frCanvas);
 
         obj.lastTimestamp = 0;
         obj.curFrames = 0;
         obj.lastSecond = 0;
         obj.lastFPS = 0;
 
-        obj.__proto__ = FrScene;
-
         return obj;
     },
 
     onRender: function (frCanvas) {
-        var d1 = new Date();
-        var ts1 = d1.getTime();
-
-        if (this.curFrames == 0) {
-            this.lastSecond = ts1;
-            this.curFrames = 1;
-        }
-        else {
-            this.curFrames += 1;
-
-            var off = ts1 - this.lastSecond;
-            if (off >= 1000) {
-                this.lastFPS = (this.curFrames * 1000 / off).toFixed(2);
-                this.lastSecond += 1000;
-                this.curFrames = 1;
-            }
-        }
+        this.curFrames += 1;
+        //var d1 = new Date();
+        //var ts1 = d1.getTime();
+        //
+        //if (this.curFrames == 0) {
+        //    this.lastSecond = ts1;
+        //    this.curFrames = 1;
+        //}
+        //else {
+        //    this.curFrames += 1;
+        //
+        //    var off = ts1 - this.lastSecond;
+        //    if (off >= 1000) {
+        //        this.lastFPS = (this.curFrames * 1000 / off).toFixed(2);
+        //        this.lastSecond += 1000;
+        //        this.curFrames = 1;
+        //    }
+        //}
 
         FrNode.onRender.call(this, frCanvas);
 
-        var d2 = new Date();
-        var ts2 = d2.getTime();
-
-        this.lastTimestamp = ts2 - ts1;
+        //var d2 = new Date();
+        //var ts2 = d2.getTime();
+        //
+        //this.lastTimestamp = ts2 - ts1;
     }
 };
 
@@ -308,6 +366,7 @@ var FrCtrl = {
     },
 
     onTouchStart: function (event) {
+        var t = { bx: event.clientX, by: event.clientY, x: event.clientX, y: event.clientY, ox: 0, oy: 0 };
         var frCtrl = this;
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
@@ -454,7 +513,7 @@ var FrLayer = {
             return false;
         }
 
-        if (this.canTap) {
+        if (this._canTap) {
             if (this.isIn(event.x, event.y)) {
                 if (this.procTap(true, event.x, event.y, event.x, event.y)) {
                     return true;
@@ -473,7 +532,7 @@ var FrLayer = {
             return ;
         }
 
-        if (this.canTap) {
+        if (this._canTap) {
             if (this.isIn(event.x, event.y)) {
                 this.procTap(false, event.bx, event.by, event.x, event.y);
             }
@@ -485,7 +544,7 @@ var FrLayer = {
             return ;
         }
 
-        if (this.canTap) {
+        if (this._canTap) {
             if (this.isIn(event.bx, event.by)) {
                 this.procTap(false, event.bx, event.by, -1, -1);
             }
@@ -499,16 +558,21 @@ var FrCanvas = {
     create: function (nameCanvas) {
         var obj = {};
 
+        obj.__proto__ = FrCanvas;
+
         obj.canvas = document.getElementById(nameCanvas);
         obj.context = obj.canvas.getContext('2d');
 
-        obj.curScene = FrScene.create();
         obj.frCtrl = FrCtrl.create(obj.canvas);
 
-        obj.fillRect = FrCanvas.fillRect;
-        obj.strokeRect = FrCanvas.strokeRect;
+        obj.isNeedRefurbish = false;
 
-        obj.onIdle = FrCanvas.onIdle;
+        obj.lastTimestamp = 0;
+        obj.curFrames = 0;
+        obj.lastSecond = 0;
+        obj.lastFPS = 0;
+
+        obj.curScene = FrScene.create(obj);
 
         return obj;
     },
@@ -527,8 +591,35 @@ var FrCanvas = {
     },
 
     onIdle: function () {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.curScene.onRender(this);
+        var d1 = new Date();
+        var ts1 = d1.getTime();
+
+        if (this.curFrames == 0) {
+            this.lastSecond = ts1;
+            this.curFrames = 1;
+        }
+        else {
+            this.curFrames += 1;
+
+            var off = ts1 - this.lastSecond;
+            if (off >= 1000) {
+                this.lastFPS = (this.curFrames * 1000 / off).toFixed(2);
+                this.lastSecond += 1000;
+                this.curFrames = 1;
+            }
+        }
+
+        if (this.isNeedRefurbish) {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.curScene.onRender(this);
+
+            this.isNeedRefurbish = false;
+        }
+
+        var d2 = new Date();
+        var ts2 = d2.getTime();
+
+        this.lastTimestamp = ts2 - ts1;
     }
 };
 

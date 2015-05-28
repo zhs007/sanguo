@@ -15,7 +15,7 @@ var SM_ScreenRect = {
     },
 
     onDraw: function (frCanvas) {
-        frCanvas.strokeRect('#ffff00', 2, this.x, this.y, this.w, this.h);
+        frCanvas.strokeRect('#ffff00', 2, this._x, this._y, this.w, this.h);
     }
 };
 
@@ -65,8 +65,10 @@ var LayerSmallMap = {
 
             var app = MapEditor.singleton;
 
-            this.screenRect.x = -app.layer.imgBack.x * this.screenRect.w / document.body.clientWidth;
-            this.screenRect.y = -app.layer.imgBack.y * this.screenRect.w / document.body.clientWidth;
+            this.screenRect.setPosition(-app.layer.imgBack._x * this.screenRect.w / document.body.clientWidth,
+                -app.layer.imgBack._y * this.screenRect.w / document.body.clientWidth);
+            //this.screenRect.x = -app.layer.imgBack.x * this.screenRect.w / document.body.clientWidth;
+            //this.screenRect.y = -app.layer.imgBack.y * this.screenRect.w / document.body.clientWidth;
         }
     },
 
@@ -78,13 +80,16 @@ var LayerSmallMap = {
         //this.imgBack.x += (event.ox);
         //this.imgBack.y += (event.oy);
 
-        this.screenRect.x += (event.ox);
-        this.screenRect.y += (event.oy);
+        this.screenRect.setPosition(this.screenRect._x + event.ox, this.screenRect._y + event.oy);
+        //this.screenRect.x += (event.ox);
+        //this.screenRect.y += (event.oy);
 
         var app = MapEditor.singleton;
 
-        app.layer.imgBack.x = -this.screenRect.x * app.layer.imgBack.curFrame.width / this.imgBack.curFrame.dw;
-        app.layer.imgBack.y = -this.screenRect.y * app.layer.imgBack.curFrame.height / this.imgBack.curFrame.dh;
+        app.layer.imgBack.setPosition(-this.screenRect._x * app.layer.imgBack.curFrame.width / this.imgBack.curFrame.dw,
+            -this.screenRect._y * app.layer.imgBack.curFrame.height / this.imgBack.curFrame.dh);
+        //app.layer.imgBack.x = -this.screenRect.x * app.layer.imgBack.curFrame.width / this.imgBack.curFrame.dw;
+        //app.layer.imgBack.y = -this.screenRect.y * app.layer.imgBack.curFrame.height / this.imgBack.curFrame.dh;
 
         //this.screenRect.x = -app.layer.imgBack.x * this.screenRect.w / document.body.clientWidth;
         //this.screenRect.y = -app.layer.imgBack.y * this.screenRect.w / document.body.clientWidth;
@@ -139,13 +144,15 @@ var LayerUI = {
 
     onResize: function () {
         if (this.img1.img.complete) {
-            this.img1.x = 0;
-            this.img1.y = document.documentElement.clientHeight - this.img1.h;
+            this.img1.setPosition(0, document.documentElement.clientHeight - this.img1.h);
+            //this.img1.x = 0;
+            //this.img1.y = document.documentElement.clientHeight - this.img1.h;
         }
 
         if (this.img2.img.complete && this.img1.img.complete) {
-            this.img2.x = this.img1.w;
-            this.img2.y = document.documentElement.clientHeight - this.img1.h;
+            this.img2.setPosition(this.img1.w, document.documentElement.clientHeight - this.img2.h);
+            //this.img2.x = this.img1.w;
+            //this.img2.y = document.documentElement.clientHeight - this.img1.h;
         }
     }
 };
@@ -186,8 +193,9 @@ var LayerMap = {
             this.imgBack.addChild(img);
             this.lstCity.push(img);
 
-            img.x = xx;
-            img.y = yy;
+            img.setPosition(xx, yy);
+            //img.x = xx;
+            //img.y = yy;
         }
     },
 
@@ -196,8 +204,9 @@ var LayerMap = {
     },
 
     onTouchMove: function (event) {
-        this.imgBack.x += (event.ox);
-        this.imgBack.y += (event.oy);
+        this.imgBack.setPosition(this.imgBack._x + event.ox, this.imgBack._y + event.oy);
+        //this.imgBack.x += (event.ox);
+        //this.imgBack.y += (event.oy);
 
         MapEditor.singleton.layerSmall.updScreenRect();
     },
@@ -251,7 +260,7 @@ var MapEditor = {
         this.canvasSmall.onIdle();
 
         var status = document.getElementById('status');
-        status.innerHTML = 'FPS:' + this.canvas.curScene.lastFPS;
+        status.innerHTML = 'FPS:' + this.canvas.lastFPS + ' refurbish:' + this.canvas.curScene.curFrames;
     },
 
     onResize: function () {
