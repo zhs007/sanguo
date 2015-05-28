@@ -26,10 +26,17 @@ var FrNode = {
 
         obj.__proto__ = FrNode;
 
+        //! 相对父节点的坐标
         obj.x = 0;
         obj.y = 0;
+
+        //! 宽度和高度
         obj.w = 0;
         obj.h = 0;
+
+        //! 显示区域，如果没有设这个，表示不会显示一部分
+        //! top、left、width、height
+        obj._clientRect = undefined;
 
         obj.isFullScreen = false;   //! 如果是全屏节点，isIn的时候必然返回true
         obj.zOrder = 0;
@@ -394,8 +401,8 @@ var FrCtrl = {
 
         var t = frCtrl.lstTouches[0];
 
-        t.ox = event.clientX - t.x;
-        t.oy = event.clientY - t.y;
+        t.ox = event.clientX - t.bx;
+        t.oy = event.clientY - t.by;
         t.x = event.clientX;
         t.y = event.clientY;
 

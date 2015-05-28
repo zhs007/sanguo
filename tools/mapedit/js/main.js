@@ -101,19 +101,21 @@ var LayerUI = {
     create: function (frCanvas) {
         var layer = FrLayer.create('uiLayer', 2, frCanvas.frCtrl);
 
+        layer.__proto__ = LayerUI;
+
         layer.setEnableTouch(true);
         layer.isFullScreen = true;
 
-        layer.img1 = FrSprite.create('res/city001.png');
+        layer.img1 = FrSprite.create('res/city001.png', function () { layer.onResize(); });
         layer.addChild(layer.img1);
-        layer.img1.x = 100;
-        layer.img1.y = 100;
+        //layer.img1.x = 100;
+        //layer.img1.y = 100;
         layer.img1.setCanTap(true, LayerUI.onTapImg1, layer);
 
-        layer.img2 = FrSprite.create('res/city002.png');
+        layer.img2 = FrSprite.create('res/city002.png', function () { layer.onResize(); });
         layer.addChild(layer.img2);
-        layer.img2.x = 300;
-        layer.img2.y = 100;
+        //layer.img2.x = 300;
+        //layer.img2.y = 100;
         layer.img2.setCanTap(true, LayerUI.onTapImg2, layer);
 
         return layer;
@@ -122,24 +124,43 @@ var LayerUI = {
     onTapImg1: function () {
         console.trace('onTapImg1');
 
+        MapEditor.singleton.layer.setCurCity(1);
+
         return true;
     },
 
     onTapImg2: function () {
         console.trace('onTapImg2');
 
+        MapEditor.singleton.layer.setCurCity(2);
+
         return true;
+    },
+
+    onResize: function () {
+        if (this.img1.img.complete) {
+            this.img1.x = 0;
+            this.img1.y = document.documentElement.clientHeight - this.img1.h;
+        }
+
+        if (this.img2.img.complete && this.img1.img.complete) {
+            this.img2.x = this.img1.w;
+            this.img2.y = document.documentElement.clientHeight - this.img1.h;
+        }
     }
 };
+
+LayerUI.__proto__ = FrLayer;
 
 var LayerMap = {
     create: function (frCanvas) {
         var layer = FrLayer.create('mainLayer', 1, frCanvas.frCtrl);
 
-        layer.onTouchBegin = LayerMap.onTouchBegin;
-        layer.onTouchMove = LayerMap.onTouchMove;
-        layer.onTouchEnd = LayerMap.onTouchEnd;
-        layer.onTouchCancel = LayerMap.onTouchCancel;
+        layer.__proto__ = LayerMap;
+        //layer.onTouchBegin = LayerMap.onTouchBegin;
+        //layer.onTouchMove = LayerMap.onTouchMove;
+        //layer.onTouchEnd = LayerMap.onTouchEnd;
+        //layer.onTouchCancel = LayerMap.onTouchCancel;
 
         layer.setEnableTouch(true);
 
@@ -148,7 +169,26 @@ var LayerMap = {
 
         layer.imgBack = imgBack;
 
+        layer.curSelCity = 0;
+        layer.lstCity = [];
+
         return layer;
+    },
+
+    setCurCity: function (cityid) {
+        this.curSelCity = cityid;
+    },
+
+    addCity: function (xx, yy) {
+        if (this.curSelCity >= 1 && this.curSelCity <= 2) {
+            var imgName = 'res/city00' + this.curSelCity + '.png';
+            var img = FrSprite.create(imgName);
+            this.imgBack.addChild(img);
+            this.lstCity.push(img);
+
+            img.x = xx;
+            img.y = yy;
+        }
     },
 
     onTouchBegin: function (event) {
@@ -163,11 +203,16 @@ var LayerMap = {
     },
 
     onTouchEnd: function (event) {
+        if (event.ox == 0 && event.oy == 0) {
+            this.addCity(event.x, event.y);
+        }
     },
 
     onTouchCancel: function (event) {
     }
-}
+};
+
+LayerMap.__proto__ = FrLayer;
 
 var MapEditor = {
     singleton: undefined,
@@ -220,6 +265,7 @@ var MapEditor = {
         app.canvasSmall.canvas.style.left = bx + 'px';
 
         app.layerSmall.updScreenRect();
+        app.uiLayer.onResize();
         //document.body.style.overflow = 'hidden';
     }
 };
