@@ -150,50 +150,35 @@ var FrScene = {
 };
 
 var FrCtrl = {
-    singleton: undefined,
-
-    getSingleton: function () {
-        if (FrCtrl.singleton != undefined) {
-            return FrCtrl.singleton;
-        }
-
-        var objMain = document;
+    create: function (objMain) {
         var obj = {};
 
         obj.lstTouches = [];
         obj.lstListener = [];
         obj.objMain = objMain;
 
-        obj.release = FrCtrl.release;
         obj.addListener = FrCtrl.addListener;
         obj.removeListener = FrCtrl.removeListener;
 
-        objMain.addEventListener('touchstart', FrCtrl.onTouchStart, false);
-        objMain.addEventListener('touchmove', FrCtrl.onTouchMove, false);
-        objMain.addEventListener('touchend', FrCtrl.onTouchEnd, false);
-        objMain.addEventListener('touchcancel', FrCtrl.onTouchCancel, false);
+        obj.onTouchStart = FrCtrl.onTouchStart;
+        obj.onTouchMove = FrCtrl.onTouchMove;
+        obj.onTouchEnd = FrCtrl.onTouchEnd;
+        obj.onTouchCancel = FrCtrl.onTouchCancel;
 
-        objMain.addEventListener('mousedown', FrCtrl.onMouseDown, false);
-        objMain.addEventListener('mousemove', FrCtrl.onMouseMove, false);
-        objMain.addEventListener('mouseup', FrCtrl.onMouseUp, false);
+        obj.onMouseDown = FrCtrl.onMouseDown;
+        obj.onMouseMove = FrCtrl.onMouseMove;
+        obj.onMouseUp = FrCtrl.onMouseUp;
 
-        this.singleton = obj;
+        objMain.addEventListener('touchstart', function (event) { obj.onTouchStart(event); }, false);
+        objMain.addEventListener('touchmove', function (event) { obj.onTouchMove(event); }, false);
+        objMain.addEventListener('touchend', function (event) { obj.onTouchEnd(event); }, false);
+        objMain.addEventListener('touchcancel', function (event) { obj.onTouchCancel(event); }, false);
+
+        objMain.addEventListener('mousedown', function (event) { obj.onMouseDown(event); }, false);
+        objMain.addEventListener('mousemove', function (event) { obj.onMouseMove(event); }, false);
+        objMain.addEventListener('mouseup', function (event) { obj.onMouseUp(event); }, false);
 
         return obj;
-    },
-
-    release: function () {
-        var frCtrl = FrCtrl.singleton;
-        var objMain = frCtrl.objMain;
-
-        objMain.removeEventListener('touchstart', FrCtrl.onTouchStart, false);
-        objMain.removeEventListener('touchmove', FrCtrl.onTouchMove, false);
-        objMain.removeEventListener('touchend', FrCtrl.onTouchEnd, false);
-        objMain.removeEventListener('touchcancel', FrCtrl.onTouchCancel, false);
-
-        objMain.removeEventListener('mousedown', FrCtrl.onMouseDown, false);
-        objMain.removeEventListener('mousemove', FrCtrl.onMouseMove, false);
-        objMain.removeEventListener('mouseup', FrCtrl.onMouseUp, false);
     },
 
     addListener: function (id, listener, order) {
@@ -223,7 +208,7 @@ var FrCtrl = {
     },
 
     onTouchStart: function (event) {
-        var frCtrl = FrCtrl.singleton;
+        var frCtrl = this;
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
@@ -237,7 +222,7 @@ var FrCtrl = {
     },
 
     onTouchMove: function (event) {
-        var frCtrl = FrCtrl.singleton;
+        var frCtrl = this;
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
@@ -248,7 +233,7 @@ var FrCtrl = {
     },
 
     onTouchEnd: function (event) {
-        var frCtrl = FrCtrl.singleton;
+        var frCtrl = this;
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
@@ -260,7 +245,7 @@ var FrCtrl = {
     },
 
     onTouchCancel: function (event) {
-        var frCtrl = FrCtrl.singleton;
+        var frCtrl = this;
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
@@ -273,7 +258,7 @@ var FrCtrl = {
 
     onMouseDown: function (event) {
         var t = { bx: event.clientX, by: event.clientY, x: event.clientX, y: event.clientY, ox: 0, oy: 0 };
-        var frCtrl = FrCtrl.singleton;
+        var frCtrl = this;
         frCtrl.lstTouches.push(t);
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
@@ -288,7 +273,7 @@ var FrCtrl = {
     },
 
     onMouseMove: function (event) {
-        var frCtrl = FrCtrl.singleton;
+        var frCtrl = this;
         if (frCtrl.lstTouches.length <= 0) {
             return ;
         }
@@ -309,7 +294,7 @@ var FrCtrl = {
     },
 
     onMouseUp: function (event) {
-        var frCtrl = FrCtrl.singleton;
+        var frCtrl = this;
         if (frCtrl.lstTouches.length <= 0) {
             return ;
         }
@@ -334,18 +319,19 @@ var FrCtrl = {
 };
 
 var FrLayer = {
-    create: function (idName, zOrder) {
+    create: function (idName, zOrder, frCtrl) {
         var obj = FrNode.create();
 
         obj.setEnableTouch = FrLayer.setEnableTouch;
         obj.idName = idName;
         obj.zOrder = zOrder;
+        obj.frCtrl = frCtrl;
 
         return obj;
     },
 
     setEnableTouch: function (isEnable) {
-        var frCtrl = FrCtrl.singleton;
+        var frCtrl = this.frCtrl;
 
         if (isEnable) {
             frCtrl.addListener(this.idName, this, this.zOrder);
@@ -364,7 +350,7 @@ var FrCanvas = {
         obj.context = obj.canvas.getContext('2d');
 
         obj.curScene = FrScene.create();
-        obj.mgrCtrl = FrCtrl.getSingleton();
+        obj.frCtrl = FrCtrl.create(obj.canvas);
 
         obj.fillRect = FrCanvas.fillRect;
         obj.strokeRect = FrCanvas.strokeRect;
