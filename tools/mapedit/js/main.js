@@ -19,17 +19,17 @@ var SM_ScreenRect = {
     }
 };
 
-var LayerSmallMapEditor = {
+var LayerSmallMap = {
     create: function (frCanvas) {
         var layer = FrLayer.create('smallLayer', 100, frCanvas.frCtrl);
 
-        layer.onTouchBegin = LayerSmallMapEditor.onTouchBegin;
-        layer.onTouchMove = LayerSmallMapEditor.onTouchMove;
-        layer.onTouchEnd = LayerSmallMapEditor.onTouchEnd;
-        layer.onTouchCancel = LayerSmallMapEditor.onTouchCancel;
+        layer.onTouchBegin = LayerSmallMap.onTouchBegin;
+        layer.onTouchMove = LayerSmallMap.onTouchMove;
+        layer.onTouchEnd = LayerSmallMap.onTouchEnd;
+        layer.onTouchCancel = LayerSmallMap.onTouchCancel;
         layer.setEnableTouch(true);
 
-        layer.updScreenRect = LayerSmallMapEditor.updScreenRect;
+        layer.updScreenRect = LayerSmallMap.updScreenRect;
 
         layer.screenRect = SM_ScreenRect.create();
 
@@ -71,6 +71,8 @@ var LayerSmallMapEditor = {
     },
 
     onTouchBegin: function (event) {
+        return true;
+
         if (event.x >= document.documentElement.clientWidth - this.imgBack.curFrame.dw && event.y >= this.imgBack.y && event.x <= document.documentElement.clientWidth && event.y <= this.imgBack.y + this.imgBack.curFrame.dh) {
             return true;
         }
@@ -101,14 +103,18 @@ var LayerSmallMapEditor = {
     }
 };
 
-var LayerMapEditor = {
+var LayerUI = {
+
+};
+
+var LayerMap = {
     create: function (frCanvas) {
         var layer = FrLayer.create('mainLayer', 1, frCanvas.frCtrl);
 
-        layer.onTouchBegin = LayerMapEditor.onTouchBegin;
-        layer.onTouchMove = LayerMapEditor.onTouchMove;
-        layer.onTouchEnd = LayerMapEditor.onTouchEnd;
-        layer.onTouchCancel = LayerMapEditor.onTouchCancel;
+        layer.onTouchBegin = LayerMap.onTouchBegin;
+        layer.onTouchMove = LayerMap.onTouchMove;
+        layer.onTouchEnd = LayerMap.onTouchEnd;
+        layer.onTouchCancel = LayerMap.onTouchCancel;
 
         layer.setEnableTouch(true);
 
@@ -150,11 +156,11 @@ var MapEditor = {
         var app = FrApplication.create();
 
         app.canvas = FrCanvas.create("editorCanvas");
-        app.layer = LayerMapEditor.create(app.canvas);
+        app.layer = LayerMap.create(app.canvas);
         app.canvas.curScene.addChild(app.layer);
 
         app.canvasSmall = FrCanvas.create("smallCanvas");
-        app.layerSmall = LayerSmallMapEditor.create(app.canvasSmall);
+        app.layerSmall = LayerSmallMap.create(app.canvasSmall);
         app.canvasSmall.curScene.addChild(app.layerSmall);
 
         app.onIdle = MapEditor.onIdle;

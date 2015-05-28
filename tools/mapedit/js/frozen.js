@@ -24,17 +24,42 @@ var FrNode = {
 
         obj.lstChild = [];
 
-        obj.addChild = FrNode.addChild;
-        obj.onRender = FrNode.onRender;
+        obj.__proto__ = FrNode;
+        //obj.addChild = FrNode.addChild;
+        //obj.onRender = FrNode.onRender;
 
         obj.x = 0;
         obj.y = 0;
+        obj.w = 0;
+        obj.h = 0;
+
+        obj.zOrder = 0;
+
+        obj.canTap = false;
+        obj.onTap = undefined;
+
+        obj.parent = undefined;
 
         return obj;
     },
 
     addChild: function (nodeChild) {
+        if (nodeChild.parent != undefined) {
+
+        }
+
         this.lstChild.push(nodeChild);
+    },
+
+    removeChild: function (nodeChild) {
+        if (nodeChild.parent == this) {
+            this.lstChild.split(nodeChild);
+            nodeChild.parent = undefined;
+        }
+    },
+
+    isIn: function (xx, yy) {
+        return xx >= this.x && xx < this.x + this.w && yy >= this.y && yy < this.y + this.h;
     },
 
     onRender: function (frCanvas) {
@@ -50,8 +75,9 @@ var FrDraw = {
 
         obj.onDraw = undefined;
 
-        obj.onRender_FrNode = obj.onRender;
-        obj.onRender = FrDraw.onRender;
+        obj.__proto__ = FrDraw;
+        //obj.onRender_FrNode = obj.onRender;
+        //obj.onRender = FrDraw.onRender;
 
         return obj;
     },
@@ -61,15 +87,19 @@ var FrDraw = {
             this.onDraw(frCanvas);
         }
 
-        this.onRender_FrNode(frCanvas);
+        FrNode.onRender.call(this, frCanvas);
+        //callParentFunc(this, 'onRender', frCanvas);
     }
 };
+
+FrDraw.__proto__ = FrNode;
 
 var FrSprite = {
     create: function (imgName, onload) {
         var obj = FrNode.create();
 
-        obj.onLoadComplete = FrSprite.onLoadComplete;
+        obj.__proto__ = FrSprite;
+        //obj.onLoadComplete = FrSprite.onLoadComplete;
         obj.curFrame = undefined;
 
         obj.img = new Image();
@@ -81,8 +111,8 @@ var FrSprite = {
         };
         obj.img.src = imgName;
 
-        obj.onRender_FrNode = obj.onRender;
-        obj.onRender = FrSprite.onRender;
+        //obj.onRender_FrNode = obj.onRender;
+        //obj.onRender = FrSprite.onRender;
 
         return obj;
     },
@@ -94,7 +124,7 @@ var FrSprite = {
                 this.x, this.y, this.curFrame.dw, this.curFrame.dh);
         }
 
-        this.onRender_FrNode(frCanvas);
+        FrNode.onRender.call(this, frCanvas);
     },
 
     onLoadComplete: function () {
@@ -106,6 +136,8 @@ var FrSprite = {
     }
 };
 
+FrSprite.__proto__ = FrNode;
+
 var FrScene = {
     create: function () {
         var obj = FrNode.create();
@@ -115,8 +147,9 @@ var FrScene = {
         obj.lastSecond = 0;
         obj.lastFPS = 0;
 
-        obj.onRender_FrNode = obj.onRender;
-        obj.onRender = FrScene.onRender;
+        obj.__proto__ = FrScene;
+        //obj.onRender_FrNode = obj.onRender;
+        //obj.onRender = FrScene.onRender;
 
         return obj;
     },
@@ -140,7 +173,7 @@ var FrScene = {
             }
         }
 
-        this.onRender_FrNode(frCanvas);
+        FrNode.onRender.call(this, frCanvas);
 
         var d2 = new Date();
         var ts2 = d2.getTime();
@@ -148,6 +181,8 @@ var FrScene = {
         this.lastTimestamp = ts2 - ts1;
     }
 };
+
+FrScene.__proto__ = FrNode;
 
 var FrCtrl = {
     create: function (objMain) {
@@ -322,7 +357,8 @@ var FrLayer = {
     create: function (idName, zOrder, frCtrl) {
         var obj = FrNode.create();
 
-        obj.setEnableTouch = FrLayer.setEnableTouch;
+        obj.__proto__ = FrLayer;
+        //obj.setEnableTouch = FrLayer.setEnableTouch;
         obj.idName = idName;
         obj.zOrder = zOrder;
         obj.frCtrl = frCtrl;
@@ -339,6 +375,20 @@ var FrLayer = {
         else {
             frCtrl.removeListener(this.idName);
         }
+    },
+
+    isFrLayer: function () {
+        return true;
+    }
+};
+
+FrLayer.__proto__ = FrNode;
+
+var FrUILayer = {
+    create: function (idName, zOrder, frCtrl) {
+        var obj = FrLayer.create(idName, zOrder, frCtrl);
+
+        return obj;
     }
 };
 
