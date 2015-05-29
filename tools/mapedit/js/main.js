@@ -2,6 +2,17 @@
  * Created by zhs007 on 15/5/25.
  */
 
+var gOldOnError = window.onerror;
+// Override previous handler.
+window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+    if (gOldOnError) {
+        alert(errorMsg);
+        return gOldOnError(errorMsg, url, lineNumber);
+    }
+
+    return false;
+}
+
 var SM_ScreenRect = {
     create: function () {
         var obj = FrDraw.create();
