@@ -32,13 +32,21 @@ var FrNode = {
         obj._x = 0;
         obj._y = 0;
 
+        //! 绝对坐标
+        //! 绝对坐标并不是实时维护的，在渲染的时候
+        //! 如果父节点的需要刷新，子节点才需要刷新
+        //! 如果本轮已经改变过相对坐标，也需要刷新
+        obj._clientX = 0;
+        obj._clientY = 0;
+        obj._isNeedUpdClientXY = false;
+
         //! 宽度和高度
         obj.w = 0;
         obj.h = 0;
 
         //! 显示区域，如果没有设这个，表示不会显示一部分
         //! top、left、width、height
-        obj._clientRect = undefined;
+        obj._scrollRect = undefined;
 
         obj.isFullScreen = false;   //! 如果是全屏节点，isIn的时候必然返回true
         obj.zOrder = 0;
@@ -57,6 +65,28 @@ var FrNode = {
         this._x = xx;
         this._y = yy;
 
+        this._isNeedUpdClientXY = true;
+
+        this.setFrCanvasRefutbish();
+    },
+
+    setScrollRect: function (x, y, w, h) {
+        if (this._scrollRect == undefined) {
+            this._scrollRect = {left: x, top: y, width: w, height: h};
+        }
+        else {
+            this._scrollRect.left = x;
+            this._scrollRect.top = y;
+            this._scrollRect.width = w;
+            this._scrollRect.height = h;
+        }
+
+        this.setFrCanvasRefutbish();
+    },
+
+    clearScrollRect: function () {
+        this._scrollRect = undefined;
+
         this.setFrCanvasRefutbish();
     },
 
@@ -64,6 +94,8 @@ var FrNode = {
         if (nodeChild.parent != undefined) {
             return ;
         }
+
+        nodeChild._isNeedUpdClientXY = true;
 
         nodeChild.parent = this;
 
@@ -78,6 +110,8 @@ var FrNode = {
 
     removeChild: function (nodeChild) {
         if (nodeChild.parent == this) {
+            nodeChild._isNeedUpdClientXY = true;
+
             this._lstChild.split(nodeChild);
             nodeChild.parent = undefined;
 
@@ -155,12 +189,36 @@ var FrNode = {
         return false;
     },
 
-    onRender: function (frCanvas) {
+    render: function () {
+        if (this.parent != undefined) {
+            if (this.parent._isNeedUpdClientXY) {
+                this._isNeedUpdClientXY = true;
+            }
+
+            if (this._isNeedUpdClientXY) {
+                this._clientX = this.parent._clientX + this._x;
+                this._clientY = this.parent._clientY + this._y;
+            }
+        }
+        else {
+            if (this._isNeedUpdClientXY) {
+                this._clientX = this._x;
+                this._clientY = this._y;
+            }
+        }
+
+        this.onRender();
+
         this.forEachChild(function (frNode) {
-            frNode.onRender(frCanvas);
+            frNode.render();
 
             return false;
         });
+
+        this._isNeedUpdClientXY = false;
+    },
+
+    onRender: function () {
     },
 
     forEachChild: function (func) {
@@ -196,19 +254,17 @@ var FrDraw = {
     create: function () {
         var obj = FrNode.create();
 
-        obj.onDraw = undefined;
-
         obj.__proto__ = FrDraw;
+
+        obj.onDraw = undefined;
 
         return obj;
     },
 
-    onRender: function (frCanvas) {
+    onRender: function () {
         if (this.onDraw != undefined) {
-            this.onDraw(frCanvas);
+            this.onDraw(this._frCanvas);
         }
-
-        FrNode.onRender.call(this, frCanvas);
     }
 };
 
@@ -234,14 +290,13 @@ var FrSprite = {
         return obj;
     },
 
-    onRender: function (frCanvas) {
+    onRender: function () {
+        var frCanvas = this._frCanvas;
         if (this.img.complete && this.curFrame != undefined) {
             frCanvas.context.drawImage(this.img,
                 this.curFrame.bx, this.curFrame.by, this.curFrame.width, this.curFrame.height,
-                this._x, this._y, this.curFrame.dw, this.curFrame.dh);
+                this._clientX, this._clientY, this.curFrame.dw, this.curFrame.dh);
         }
-
-        FrNode.onRender.call(this, frCanvas);
     },
 
     onLoadComplete: function () {
@@ -268,40 +323,13 @@ var FrScene = {
 
         obj.setFrCanvas(frCanvas);
 
-        obj.lastTimestamp = 0;
         obj.curFrames = 0;
-        obj.lastSecond = 0;
-        obj.lastFPS = 0;
 
         return obj;
     },
 
-    onRender: function (frCanvas) {
+    onRender: function () {
         this.curFrames += 1;
-        //var d1 = new Date();
-        //var ts1 = d1.getTime();
-        //
-        //if (this.curFrames == 0) {
-        //    this.lastSecond = ts1;
-        //    this.curFrames = 1;
-        //}
-        //else {
-        //    this.curFrames += 1;
-        //
-        //    var off = ts1 - this.lastSecond;
-        //    if (off >= 1000) {
-        //        this.lastFPS = (this.curFrames * 1000 / off).toFixed(2);
-        //        this.lastSecond += 1000;
-        //        this.curFrames = 1;
-        //    }
-        //}
-
-        FrNode.onRender.call(this, frCanvas);
-
-        //var d2 = new Date();
-        //var ts2 = d2.getTime();
-        //
-        //this.lastTimestamp = ts2 - ts1;
     }
 };
 
@@ -611,7 +639,7 @@ var FrCanvas = {
 
         if (this.isNeedRefurbish) {
             this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.curScene.onRender(this);
+            this.curScene.render();
 
             this.isNeedRefurbish = false;
         }
