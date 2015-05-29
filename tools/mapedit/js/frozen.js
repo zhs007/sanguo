@@ -394,13 +394,19 @@ var FrCtrl = {
     },
 
     onTouchStart: function (event) {
-        var t = { bx: event.clientX, by: event.clientY, x: event.clientX, y: event.clientY, ox: 0, oy: 0 };
         var frCtrl = this;
+
+        for (var i = 0; i < event.touches.length; ++i) {
+            var it = event.touches[i];
+            var t = { bx: it.clientX, by: it.clientY, x: it.clientX, y: it.clientY, ox: 0, oy: 0 };
+
+            frCtrl.lstTouches[it.identifier] = t;
+        }
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
             if (listener.func.onTouchBegin != undefined) {
-                if (listener.func.onTouchBegin()) {
+                if (listener.func.onTouchBegin(frCtrl.lstTouches[0])) {
                     listener.isBegin = true;
                     break;
                 }
@@ -411,10 +417,20 @@ var FrCtrl = {
     onTouchMove: function (event) {
         var frCtrl = this;
 
+        for (var i = 0; i < event.touches.length; ++i) {
+            var it = event.touches[i];
+
+            frCtrl.lstTouches[it.identifier].ox = it.clientX - frCtrl.lstTouches[it.identifier].x;
+            frCtrl.lstTouches[it.identifier].oy = it.clientY - frCtrl.lstTouches[it.identifier].y;
+
+            frCtrl.lstTouches[it.identifier].x = it.clientX;
+            frCtrl.lstTouches[it.identifier].y = it.clientY;
+        }
+
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
             if (listener.isBegin && listener.func.onTouchMove != undefined) {
-                listener.func.onTouchMove();
+                listener.func.onTouchMove(frCtrl.lstTouches[0]);
             }
         }
     },
@@ -422,10 +438,20 @@ var FrCtrl = {
     onTouchEnd: function (event) {
         var frCtrl = this;
 
+        for (var i = 0; i < event.touches.length; ++i) {
+            var it = event.touches[i];
+
+            frCtrl.lstTouches[it.identifier].ox = it.clientX - frCtrl.lstTouches[it.identifier].x;
+            frCtrl.lstTouches[it.identifier].oy = it.clientY - frCtrl.lstTouches[it.identifier].y;
+
+            frCtrl.lstTouches[it.identifier].x = it.clientX;
+            frCtrl.lstTouches[it.identifier].y = it.clientY;
+        }
+
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
             if (listener.isBegin && listener.func.onTouchEnd != undefined) {
-                listener.func.onTouchEnd();
+                listener.func.onTouchEnd(frCtrl.lstTouches[0]);
                 listener.isBegin = false;
             }
         }
@@ -437,7 +463,7 @@ var FrCtrl = {
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
             var listener = frCtrl.lstListener[i];
             if (listener.isBegin && listener.func.onTouchCancel != undefined) {
-                listener.func.onTouchCancel();
+                listener.func.onTouchCancel(frCtrl.lstTouches[0]);
                 listener.isBegin = false;
             }
         }
