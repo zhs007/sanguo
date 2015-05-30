@@ -473,6 +473,8 @@ var FrCtrl = {
                 listener.isBegin = false;
             }
         }
+
+        frCtrl.lstTouches.splice(0, frCtrl.lstTouches.length);
     },
 
     onTouchCancel: function (event) {
