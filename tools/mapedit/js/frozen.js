@@ -401,6 +401,8 @@ var FrCtrl = {
             var t = { bx: it.clientX, by: it.clientY, x: it.clientX, y: it.clientY, ox: 0, oy: 0 };
 
             frCtrl.lstTouches[it.identifier] = t;
+
+            alert(it.identifier);
         }
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
