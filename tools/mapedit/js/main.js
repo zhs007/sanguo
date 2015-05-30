@@ -5,10 +5,10 @@
 var gOldOnError = window.onerror;
 // Override previous handler.
 window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
-    if (gOldOnError) {
+    //if (gOldOnError) {
         alert(errorMsg);
-        return gOldOnError(errorMsg, url, lineNumber);
-    }
+    //    return gOldOnError(errorMsg, url, lineNumber);
+    //}
 
     return false;
 }
