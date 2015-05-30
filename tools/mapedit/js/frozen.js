@@ -436,12 +436,13 @@ var FrCtrl = {
         for (var i = 0; i < event.touches.length; ++i) {
             var it = event.touches[i];
             var tt = frCtrl.findTouch(it.identifier);
+            if (tt != undefined) {
+                tt.ox = it.clientX - tt.x;
+                tt.oy = it.clientY - tt.y;
 
-            tt.ox = it.clientX - tt.x;
-            tt.oy = it.clientY - tt.y;
-
-            tt.x = it.clientX;
-            tt.y = it.clientY;
+                tt.x = it.clientX;
+                tt.y = it.clientY;
+            }
         }
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
