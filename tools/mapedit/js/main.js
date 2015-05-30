@@ -7,6 +7,7 @@ var gOldOnError = window.onerror;
 window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
     //if (gOldOnError) {
         alert(errorMsg);
+    alert(url + ' ' + lineNumber);
     //    return gOldOnError(errorMsg, url, lineNumber);
     //}
 
