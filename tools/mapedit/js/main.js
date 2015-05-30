@@ -205,7 +205,7 @@ var LayerMap = {
             this.imgBack.addChild(img);
             this.lstCity.push(img);
 
-            img.setPosition(xx, yy);
+            img.setPosition(-this.imgBack._clientX + xx, -this.imgBack._clientY + yy);
             //img.x = xx;
             //img.y = yy;
         }
