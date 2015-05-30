@@ -393,16 +393,28 @@ var FrCtrl = {
         });
     },
 
+    findTouch: function (id) {
+        var frCtrl = this;
+
+        for (var i = 0; i < frCtrl.lstTouches.length; ++i) {
+            if (id == frCtrl.lstTouches[i].id) {
+                return frCtrl.lstTouches[i];
+            }
+        }
+
+        return undefined;
+    },
+
     onTouchStart: function (event) {
         var frCtrl = this;
 
         for (var i = 0; i < event.touches.length; ++i) {
             var it = event.touches[i];
-            var t = { bx: it.clientX, by: it.clientY, x: it.clientX, y: it.clientY, ox: 0, oy: 0 };
+            var t = { id: it.identifier, bx: it.clientX, by: it.clientY, x: it.clientX, y: it.clientY, ox: 0, oy: 0 };
 
-            frCtrl.lstTouches[it.identifier] = t;
+            frCtrl.lstTouches.push(t);
 
-            alert(it.identifier);
+            //alert(it.identifier);
         }
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
@@ -421,12 +433,13 @@ var FrCtrl = {
 
         for (var i = 0; i < event.touches.length; ++i) {
             var it = event.touches[i];
+            var tt = frCtrl.findTouch(it.identifier);
 
-            frCtrl.lstTouches[it.identifier].ox = it.clientX - frCtrl.lstTouches[it.identifier].x;
-            frCtrl.lstTouches[it.identifier].oy = it.clientY - frCtrl.lstTouches[it.identifier].y;
+            tt.ox = it.clientX - tt.x;
+            tt.oy = it.clientY - tt.y;
 
-            frCtrl.lstTouches[it.identifier].x = it.clientX;
-            frCtrl.lstTouches[it.identifier].y = it.clientY;
+            tt.x = it.clientX;
+            tt.y = it.clientY;
         }
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {
@@ -442,12 +455,13 @@ var FrCtrl = {
 
         for (var i = 0; i < event.touches.length; ++i) {
             var it = event.touches[i];
+            var tt = frCtrl.findTouch(it.identifier);
 
-            frCtrl.lstTouches[it.identifier].ox = it.clientX - frCtrl.lstTouches[it.identifier].x;
-            frCtrl.lstTouches[it.identifier].oy = it.clientY - frCtrl.lstTouches[it.identifier].y;
+            tt.ox = it.clientX - tt.x;
+            tt.oy = it.clientY - tt.y;
 
-            frCtrl.lstTouches[it.identifier].x = it.clientX;
-            frCtrl.lstTouches[it.identifier].y = it.clientY;
+            tt.x = it.clientX;
+            tt.y = it.clientY;
         }
 
         for (var i = 0; i < frCtrl.lstListener.length; ++i) {

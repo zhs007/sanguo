@@ -71,7 +71,7 @@ var LayerSmallMap = {
     },
 
     updScreenRect: function () {
-        if (this.imgBack.img.complete) {
+        if (this.imgBack.curFrame != undefined) {
             this.screenRect.w = document.documentElement.clientWidth * this.imgBack.curFrame.dw / this.imgBack.curFrame.width;
             this.screenRect.h = document.documentElement.clientHeight * this.screenRect.w / document.body.clientWidth;
 
