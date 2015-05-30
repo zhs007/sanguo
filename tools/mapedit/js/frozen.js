@@ -339,21 +339,23 @@ var FrCtrl = {
     create: function (objMain) {
         var obj = {};
 
+        obj.__proto__ = FrCtrl;
+
         obj.lstTouches = [];
         obj.lstListener = [];
         obj.objMain = objMain;
 
-        obj.addListener = FrCtrl.addListener;
-        obj.removeListener = FrCtrl.removeListener;
-
-        obj.onTouchStart = FrCtrl.onTouchStart;
-        obj.onTouchMove = FrCtrl.onTouchMove;
-        obj.onTouchEnd = FrCtrl.onTouchEnd;
-        obj.onTouchCancel = FrCtrl.onTouchCancel;
-
-        obj.onMouseDown = FrCtrl.onMouseDown;
-        obj.onMouseMove = FrCtrl.onMouseMove;
-        obj.onMouseUp = FrCtrl.onMouseUp;
+        //obj.addListener = FrCtrl.addListener;
+        //obj.removeListener = FrCtrl.removeListener;
+        //
+        //obj.onTouchStart = FrCtrl.onTouchStart;
+        //obj.onTouchMove = FrCtrl.onTouchMove;
+        //obj.onTouchEnd = FrCtrl.onTouchEnd;
+        //obj.onTouchCancel = FrCtrl.onTouchCancel;
+        //
+        //obj.onMouseDown = FrCtrl.onMouseDown;
+        //obj.onMouseMove = FrCtrl.onMouseMove;
+        //obj.onMouseUp = FrCtrl.onMouseUp;
 
         objMain.addEventListener('touchstart', function (event) { obj.onTouchStart(event); }, false);
         objMain.addEventListener('touchmove', function (event) { obj.onTouchMove(event); }, false);
