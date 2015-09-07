@@ -46,15 +46,15 @@ bool GameScene::init()
 
 	//PersonMgr::getSingleton().init(this);
 
-	for(int i = 0; i < 10; ++i)
-	{
-//		Person* pPerson = PersonMgr::getSingleton().newPerson(0, 10000001 + i);
-//
-//		if(pPerson != NULL)
-//			pPerson->setPosition(100 + i * 100, 100 + i * 100);
-        
-        addArmy(10010001 + i, 10, 1000 + rand() % 1000, 1000 + rand() % 1000);
-	}
+//	for(int i = 0; i < 10; ++i)
+//	{
+////		Person* pPerson = PersonMgr::getSingleton().newPerson(0, 10000001 + i);
+////
+////		if(pPerson != NULL)
+////			pPerson->setPosition(100 + i * 100, 100 + i * 100);
+//        
+//        addArmy(10010001 + i, 10, 1000 + rand() % 1000, 1000 + rand() % 1000);
+//	}
     
     //Person* pPerson = PersonMgr::getSingleton().newPerson(0);
     //pPerson->init(0, *this);
@@ -74,40 +74,42 @@ void GameScene::initMap()
     rect.origin.set(0, 0);
     rect.size.setSize(m_pLayerGround->getWidth(), m_pLayerGround->getHeight());
     SetLayerRect(rect);
+    
+    m_pLayerGround->initTile();
 }
 
 void GameScene::onIdle(float dt)
 {
     int ot = dt * 1000;
     
-    for (std::vector<Army*>::iterator it = m_lstArmy.begin(); it != m_lstArmy.end(); ++it) {
-        (*it)->onIdle(ot);
-    }
+//    for (std::vector<Army*>::iterator it = m_lstArmy.begin(); it != m_lstArmy.end(); ++it) {
+//        (*it)->onIdle(ot);
+//    }
 }
 
 void GameScene::release()
 {
-    for (std::vector<Army*>::iterator it = m_lstArmy.begin(); it != m_lstArmy.end(); ++it) {
-        Army* pArmy = *it;
-        
-        pArmy->release();
-        
-        delete pArmy;
-    }
-    
-    m_lstArmy.clear();
+//    for (std::vector<Army*>::iterator it = m_lstArmy.begin(); it != m_lstArmy.end(); ++it) {
+//        Army* pArmy = *it;
+//        
+//        pArmy->release();
+//        
+//        delete pArmy;
+//    }
+//    
+//    m_lstArmy.clear();
 }
 
 void GameScene::addArmy(int gameObjID, int nums, float xx, float yy)
 {
-    SoldierInfo* pSI = PersonMgr::getSingleton().getSoldierInfo(gameObjID);
-    if (pSI == NULL)
-        return ;
-    
-    Army* pArmy = new Army(*this, *pSI);
-    pArmy->init(gameObjID, nums, xx, yy, rand() % 1000 - 500, rand() % 1000 - 500);
-    
-    m_lstArmy.push_back(pArmy);
+//    SoldierInfo* pSI = PersonMgr::getSingleton().getSoldierInfo(gameObjID);
+//    if (pSI == NULL)
+//        return ;
+//    
+//    Army* pArmy = new Army(*this, *pSI);
+//    pArmy->init(gameObjID, nums, xx, yy, rand() % 1000 - 500, rand() % 1000 - 500);
+//    
+//    m_lstArmy.push_back(pArmy);
 }
 
 //! 新建一个士兵实例出来

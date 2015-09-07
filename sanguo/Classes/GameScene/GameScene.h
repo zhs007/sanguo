@@ -47,7 +47,7 @@ protected:
     EffectLayer*        m_pLayerEffect;
     SoldierLayer*       m_pLayerSoldier;
     
-    std::vector<Army*>  m_lstArmy;
+    //std::vector<Army*>  m_lstArmy;
 };
 
 #endif // __GAMESCENE_GAMESCENE_H__

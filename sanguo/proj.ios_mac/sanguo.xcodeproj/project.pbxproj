@@ -12,6 +12,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2542F05E1B0C75B1005A0CC1 /* StaticPersonInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F960291B05E132001607DB /* StaticPersonInfo.cpp */; };
+		25EB24F41B96E7B900D6F52C /* Soldier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB24F31B96E7B900D6F52C /* Soldier.cpp */; };
+		25EB24F51B96E7B900D6F52C /* Soldier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB24F31B96E7B900D6F52C /* Soldier.cpp */; };
 		25EB52581B0C23A100897A30 /* Army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB52561B0C23A100897A30 /* Army.cpp */; };
 		25EB52591B0C23AC00897A30 /* Army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EB52561B0C23A100897A30 /* Army.cpp */; };
 		25EE06E51B0DA7E800775E06 /* EffectLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EE06E31B0DA7E800775E06 /* EffectLayer.cpp */; };
@@ -33,6 +35,8 @@
 		25F71E091B048A1F0070DAEE /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71E071B048A1F0070DAEE /* GameScene.cpp */; };
 		25F71E0A1B048A1F0070DAEE /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F71E071B048A1F0070DAEE /* GameScene.cpp */; };
 		25F9602B1B05E132001607DB /* StaticPersonInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F960291B05E132001607DB /* StaticPersonInfo.cpp */; };
+		25FC70351B9DCBE200DFEE1A /* TileLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25FC70341B9DCBE200DFEE1A /* TileLayer.cpp */; };
+		25FC70361B9DCBE200DFEE1A /* TileLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25FC70341B9DCBE200DFEE1A /* TileLayer.cpp */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -120,6 +124,8 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* sanguo iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sanguo iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		25EB24F21B96E7A300D6F52C /* Soldier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Soldier.h; sourceTree = "<group>"; };
+		25EB24F31B96E7B900D6F52C /* Soldier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Soldier.cpp; sourceTree = "<group>"; };
 		25EB52561B0C23A100897A30 /* Army.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Army.cpp; sourceTree = "<group>"; };
 		25EB52571B0C23A100897A30 /* Army.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Army.h; sourceTree = "<group>"; };
 		25EE06E31B0DA7E800775E06 /* EffectLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectLayer.cpp; sourceTree = "<group>"; };
@@ -143,6 +149,8 @@
 		25F71E0B1B04962B0070DAEE /* BaseDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDef.h; sourceTree = "<group>"; };
 		25F960291B05E132001607DB /* StaticPersonInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticPersonInfo.cpp; sourceTree = "<group>"; };
 		25F9602A1B05E132001607DB /* StaticPersonInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticPersonInfo.h; sourceTree = "<group>"; };
+		25FC70331B9DCBCA00DFEE1A /* TileLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileLayer.h; sourceTree = "<group>"; };
+		25FC70341B9DCBE200DFEE1A /* TileLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileLayer.cpp; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -290,6 +298,10 @@
 				25EE06E81B0DAB5700775E06 /* SoldierLayer.h */,
 				25F960291B05E132001607DB /* StaticPersonInfo.cpp */,
 				25F9602A1B05E132001607DB /* StaticPersonInfo.h */,
+				25EB24F21B96E7A300D6F52C /* Soldier.h */,
+				25EB24F31B96E7B900D6F52C /* Soldier.cpp */,
+				25FC70331B9DCBCA00DFEE1A /* TileLayer.h */,
+				25FC70341B9DCBE200DFEE1A /* TileLayer.cpp */,
 			);
 			path = GameScene;
 			sourceTree = "<group>";
@@ -546,11 +558,13 @@
 				25EE06E91B0DAB5700775E06 /* SoldierLayer.cpp in Sources */,
 				25F71DF91B0480480070DAEE /* BaseObj.cpp in Sources */,
 				25F71DF01B04705B0070DAEE /* LayerCtrl.cpp in Sources */,
+				25EB24F41B96E7B900D6F52C /* Soldier.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				25F71DFD1B0481450070DAEE /* BaseCSV.cpp in Sources */,
 				25F71E011B0486DB0070DAEE /* Person.cpp in Sources */,
 				25EB52581B0C23A100897A30 /* Army.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				25FC70351B9DCBE200DFEE1A /* TileLayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				25F9602B1B05E132001607DB /* StaticPersonInfo.cpp in Sources */,
@@ -575,6 +589,8 @@
 				25F71DFA1B0480480070DAEE /* BaseObj.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
+				25FC70361B9DCBE200DFEE1A /* TileLayer.cpp in Sources */,
+				25EB24F51B96E7B900D6F52C /* Soldier.cpp in Sources */,
 				25EE06EA1B0DAB5700775E06 /* SoldierLayer.cpp in Sources */,
 				25F71E0A1B048A1F0070DAEE /* GameScene.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,

@@ -18,6 +18,8 @@ public:
     float getWidth();
     
     float getHeight();
+    
+    void initTile();
 protected:
 	GroundLayer();
     virtual ~GroundLayer();
@@ -27,6 +29,7 @@ protected:
     Sprite*                     m_pBack;
     
     SpriteBatchNode*			m_sbnGround;		//! 地面节点
+    SpriteBatchNode*			m_sbnTile;          //! tile节点
 };
 
 #endif	// __GAMESCENE_GROUNDLAYER_H__

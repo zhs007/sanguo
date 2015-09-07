@@ -8,6 +8,7 @@ USING_NS_CC;
 GroundLayer::GroundLayer()
     : m_pBack(NULL)
     , m_sbnGround(NULL)
+    , m_sbnTile(NULL)
 {	
 }
 
@@ -27,6 +28,7 @@ bool GroundLayer::init()
     addChild(m_pBack);
     
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("res/soldier.plist", "res/soldier.pvr.ccz");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("res/tile.plist", "res/tile.pvr.ccz");
     
     //! 初始化特效的批量渲染资源
     Texture2D* persontex = Director::getInstance()->getTextureCache()->addImage("res/soldier.pvr.ccz");
@@ -35,7 +37,28 @@ bool GroundLayer::init()
     m_sbnGround->setPosition(0, 0);
     addChild(m_sbnGround);
     
+    Texture2D* tileex = Director::getInstance()->getTextureCache()->addImage("res/tile.pvr.ccz");
+    m_sbnTile = SpriteBatchNode::createWithTexture(tileex);
+    
+    m_sbnTile->setPosition(0, 0);
+    addChild(m_sbnTile);
+    
     return true;
+}
+
+void GroundLayer::initTile()
+{
+    SpriteFrame* frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("tile001.png");
+    
+    for (int y = 0; y < 100; ++y) {
+        for (int x = 0; x < 100; ++x) {
+            Sprite* pTile = Sprite::createWithSpriteFrame(frame);
+            pTile->setAnchorPoint(Vec2(0, 0));
+            pTile->setPosition(Vec2(16 * x, 16 * y));
+
+            m_sbnTile->addChild(pTile);
+        }
+    }
 }
 
 //! 计时
